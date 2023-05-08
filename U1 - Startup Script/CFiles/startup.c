@@ -91,6 +91,9 @@ void Reset_Handler(void){
     {
         *((uint32_t *)_sbss + i) = 0;
     }
+    // Call main
+    main();
+    while(1);
 }
 
 void Default_Handler(void){

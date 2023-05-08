@@ -20,6 +20,7 @@ extern uint32_t _estack;
 
 void Reset_Handler(void);
 void Default_Handler(void);
+extern int main(void);
 
 // Todas las interrupciones y sus handlers
 void NMI_Handler(void) __attribute__((weak, alias("Default_Handler")));
