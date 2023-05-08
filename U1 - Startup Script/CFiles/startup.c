@@ -1,7 +1,5 @@
 #include "../Headers/startup.h"
 
-#include <stdint.h>
-
 // Guardo tabla de vectores en su seccion correspondiente
 uint32_t vectors[] __attribute__((section(".isr_vector"))) = {
     STACK_START,
