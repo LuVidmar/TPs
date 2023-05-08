@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "startup.h": "c",
+        "registros.h": "c",
+        "leds.h": "c"
+    }
+}
