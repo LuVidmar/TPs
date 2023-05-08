@@ -1,5 +1,4 @@
 #include "../Headers/leds.h"
-#include "../Headers/registros.h"
 
 int apagarLeds(int ledNumber){
     // apagamos LED mediante "Port output data register"
