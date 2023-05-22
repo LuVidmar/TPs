@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "dwt_delay.h": "c",
-        "stat.h": "c"
-    }
-}
