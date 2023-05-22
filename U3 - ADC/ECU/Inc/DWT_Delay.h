@@ -9,12 +9,12 @@
  * Visit Website: www.DeepBlueMbedded.com
  *
  */
-
+#pragma once
 #ifndef DWT_DELAY_H_
 #define DWT_DELAY_H_
 
 #include "stm32f1xx_hal.h"
-
+#include <stdint.h>
 
 uint32_t DWT_Delay_Init(void);
 

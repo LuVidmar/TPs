@@ -1,7 +1,6 @@
 {
     "files.associations": {
-        "startup.h": "c",
-        "registros.h": "c",
-        "leds.h": "c"
+        "dwt_delay.h": "c",
+        "stat.h": "c"
     }
 }

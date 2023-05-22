@@ -1,11 +1,5 @@
 #include "main.h"
 
-#include "../../ECU/Inc/DWT_Delay.h"
-#include "../../ECU/Inc/LCD16x2_cfg.h"
-
-#define BITSONADC 4096 //ADC de 12 bits
-#define REFVOLT 33     //Amplitud 0-3.3V
-
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
