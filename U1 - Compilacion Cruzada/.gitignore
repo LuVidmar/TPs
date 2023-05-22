@@ -2,3 +2,5 @@
 /src
 #vsCode
 /.vscode
+#Object files
+*.o
