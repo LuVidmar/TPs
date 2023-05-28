@@ -1,6 +1,8 @@
-#Compiled
-/src
 #vsCode
 /.vscode
 #Object files
 *.o
+#Build
+/build
+#Preprocessed
+/preprocessed

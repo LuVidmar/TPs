@@ -1,17 +1,49 @@
-CC = arm-none-eabi-gcc
-COMPILEFLAGS = -g -Wall -nostdlib
-ARCHFLAGS = -mcpu=cortex-m3 -mthumb
+# Flags
+CC := arm-none-eabi-gcc --specs=nosys.specs
+COMPILEFLAGS := -g -Wall -nostdlib
+ARCHFLAGS := -mcpu=cortex-m3 -mthumb # architecture
+LINKERFILE := STM32F103C8Tx_FLASH.ld
+LINKFLAGS := -T $(LINKERFILE)
 
-objects = $(wildcard ./src/*.o)
-cfiles = $(wildcard ./CFiles/*.c)
-hfiles = $(wildcard ./Headers/*.h)
+# Commands
+LINK := $(CC) $(LINKFLAGS)
+COMPILE := $(CC) $(COMPILEFLAGS) $(ARCHFLAGS)
 
-generateobjs: $(cfiles) $(hfiles)
-	$(CC) $(COMPILEFLAGS) $(ARCHFLAGS) -c $(cfiles)
+# Directories
+sourcedir := source
+builddir := build
+preprocesseddir := preprocessed
+headersdir := headers
 
-pp: $(cfiles)
-	$(CC) $(cfiles) -E -o $(subst .c,.i,$(cfiles))
+# Files
+cfiles = $(wildcard $(sourcedir)/*.c)
+ofiles = $(wildcard $(builddir)/*.o)
+
+# Functions
+all: build link binary
+build: $(patsubst %.c, %.o, $(cfiles))
+pp: $(patsubst %.c, %.i, $(cfiles))
+
+%.o: %.c
+	@echo "Compiling $< into $@:"
+	@mkdir -p $(builddir)
+	$(COMPILE) -c $< -o $(subst $(sourcedir),$(builddir),$@)
+
+%.i: %.c
+	@echo "Preprocessing $< into $@:"
+	@mkdir -p $(preprocesseddir)
+	$(COMPILE) -E $< -o $(subst $(sourcedir),$(preprocesseddir),$@)
+
+link: build
+	@echo "Linking object files into build/application.elf:"
+	$(LINK) $(ofiles) -o $(builddir)/application.elf
+
+binary: link
+	@echo "Generating binary file from build/application.elf:"
+	arm-none-eabi-objcopy -O binary $(builddir)/application.elf $(builddir)/application.bin
 
 clean:
-	rm *.o
-	echo "Cleaned up"
+	@echo "Removing build and preprocessed directories"
+	@rm -r -f build
+	@rm -r -f preprocessed
+	@echo "Cleaned up"

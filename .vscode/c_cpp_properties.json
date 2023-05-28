@@ -9,6 +9,15 @@
                 "/usr/arm-none-eabi/include/newlib-nano",
                 "/usr/arm-none-eabi/include/sys"
             ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/**",
+                    "/usr/arm-none-eabi/include",
+                    "/usr/arm-none-eabi/include/machine",
+                    "/usr/arm-none-eabi/include/newlib-nano",
+                    "/usr/arm-none-eabi/include/sys"
+                ]
+            },
             "defines": [],
             "compilerPath": "/usr/bin/arm-none-eabi-gcc",
             "cStandard": "c17",

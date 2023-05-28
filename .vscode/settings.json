@@ -1,0 +1,7 @@
+{
+    "cortex-debug.gdbPath.linux": null,
+    "cortex-debug.armToolchainPath.linux": null,
+    "cortex-debug.JLinkGDBServerPath.linux": null,
+    "cortex-debug.stm32cubeprogrammer.linux": null,
+    "cortex-debug.stutilPath.linux": null
+}
