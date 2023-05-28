@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "lcd16x2.h": "c",
+        "stm32f1xx_hal_def.h": "c",
+        "stm32_hal_legacy.h": "c",
+        "stddef.h": "c",
+        "stm32f1xx.h": "c"
+    }
+}

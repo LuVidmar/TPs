@@ -20,7 +20,7 @@
             },
             "defines": [
                 "USE_HAL_DRIVER",
-                "STM32F103xx"
+                "STM32F103xB"
             ],
             "compilerPath": "/usr/bin/arm-none-eabi-gcc",
             "cStandard": "c17",
