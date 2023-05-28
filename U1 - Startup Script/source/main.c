@@ -1,5 +1,4 @@
-#include "../Headers/leds.h"
-#include "../Headers/registros.h"
+#include "../headers/main.h"
 
 int main()
 {

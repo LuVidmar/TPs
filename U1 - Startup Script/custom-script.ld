@@ -92,6 +92,6 @@ SECTIONS
     {
         . = ORIGIN(RAM) + LENGTH(RAM) - STACK_SIZE; # defino el comienzo de la pila
         . = ALIGN(4);
-        _estack = .; # defino final de la pila
+        _sstack = .; # defino comienzo de la pila
     }
 }

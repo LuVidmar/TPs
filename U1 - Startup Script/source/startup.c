@@ -1,4 +1,4 @@
-#include "../Headers/startup.h"
+#include "../headers/startup.h"
 
 // Guardo tabla de vectores en su seccion correspondiente
 uint32_t vectors[] __attribute__((section(".isr_vector"))) = {
@@ -9,13 +9,13 @@ uint32_t vectors[] __attribute__((section(".isr_vector"))) = {
     (uint32_t)MemManage_Handler,
     (uint32_t)BusFault_Handler,
     (uint32_t)UsageFault_Handler,
-    0, // reserved
-    0, // reserved
-    0, // reserved
-    0, // reserved
+    0, // reservado
+    0, // reservado
+    0, // reservado
+    0, // reservado
     (uint32_t)SVC_Handler,
     (uint32_t)DebugMon_Handler,
-    0, // reserved
+    0, // reservado
     (uint32_t)PendSV_Handler,
     (uint32_t)SysTick_Handler,
     (uint32_t)WWDG_IRQHandler,
@@ -91,11 +91,11 @@ void Reset_Handler(void){
     {
         *((uint32_t *)_sbss + i) = 0;
     }
-    // Call main
+    // Llamamos a main
     main();
     while(1);
 }
 
 void Default_Handler(void){
-    while(1);
+    while(1); // Loop infinto
 }
