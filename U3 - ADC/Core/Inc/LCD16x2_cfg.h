@@ -2,7 +2,7 @@
 #ifndef LCD16X2_CFG_H_
 #define LCD16X2_CFG_H_
 
-#include "../../ECU/Inc/LCD16x2.h"
+#include "LCD16x2.h"
 
 extern const LCD16x2_CfgType LCD16x2_CfgParam;
 

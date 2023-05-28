@@ -1,7 +1,7 @@
 #include "main.h"
 
-#include "../../ECU/Inc/DWT_Delay.h"
-#include "../../ECU/Inc/LCD16x2_cfg.h"
+#include "DWT_Delay.h"
+#include "LCD16x2_cfg.h"
 
 #define BITSONADC 4096 //ADC de 12 bits
 #define REFVOLT 33     //Amplitud 0-3.3V
