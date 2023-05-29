@@ -5,6 +5,8 @@ uint32_t state; // Estado actual
 char* message; // Mensaje a mostrar en UART
 char* recieved; // Input de UART
 bool imprimir_en_lcd; // Flag para imprimir en LCD
+bool imprimir_en_uart;
+static bool runned_once = false;
 
 void inicializarFSM(void){
 	state = MENU; // Estado inicial
@@ -15,6 +17,7 @@ void inicializarFSM(void){
 	recieved = (char*)malloc(10 * sizeof(char)); // Reservo memoria para recibir
 	
 	imprimir_en_lcd = !IMPRIMIR; // Inicialmente no imprimimos en lcd
+	imprimir_en_uart = IMPRIMIR; 
 }
 
 /**********************************/
@@ -22,10 +25,13 @@ void inicializarFSM(void){
 /**********************************/
 void state_menu(){
 	
+	// Imprimo el menu
+	imprimir_en_uart = IMPRIMIR;
 	// Validaciones
 	if (strlen(recieved) != 1){
 		return;
 	}
+	// Si se recibe un estado valido, cambio de estado
 	else if (strcmp(recieved,"1")){
 		state = UNICAMED;
 	}
@@ -37,8 +43,21 @@ void state_menu(){
 	}
 	return;
 }
+
 void state_unicamed(){
-	return;
+
+	if(!runned_once){
+		runned_once = true;
+		// Imprimo la ultima medicion
+		strcpy(message,strcat(uartTransmit,GO_BACK));
+		imprimir_en_uart = IMPRIMIR;
+	}
+
+	if(strcmp(recieved,"q")){
+		state = MENU;
+		runned_once = false;
+	}
+
 }
 void state_stream(){
 	return;

@@ -47,6 +47,7 @@ extern uint32_t state; // Estado actual
 extern char* message; // Mensaje a mostrar en UART
 extern char* recieved; // Input de UART
 extern bool imprimir_en_lcd; // Flag para imprimir en LCD
+extern bool imprimir_en_uart;
 
 /* Funciones */
 void calculos(void);

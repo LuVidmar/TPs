@@ -62,6 +62,9 @@ int main(void)
   LCD_Clear();
   // ADC init
   HAL_ADCEx_Calibration_Start(&hadc1);
+  //Timer Init
+  HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_Base_Start_IT(&htim2);
 
   while (1)
   {
@@ -77,6 +80,7 @@ int main(void)
         state_menu();
         break;
       case UNICAMED:
+        state_unicamed();
         break;
       case STREAM:
         break;
@@ -99,7 +103,11 @@ void refrescar_lcd(bool imprimir){
   }
 
   LCD_SetCursor(2, 1); //seteo el cursor en la 2da fila y 1er columna
-  LCD_WriteString(formatted); // escribo el string generado por el ADC
+
+  if (imprimir){ // Solo imprimo si es necesario
+    LCD_WriteString(formatted); // escribo el string generado por el ADC
+  }
+  
 }
 
 void calculos(void){
@@ -118,7 +126,6 @@ void calculos(void){
   */
   sprintf(formatted,"%d.%d V",parteEntera,parteDec);
   sprintf(uartTransmit,"Tension Medida: %s\n\r",formatted); // para el uart
-
   /*PWM*/
   PWM_ADC = AD_RES * ARR_MAX / BITSONADC; //regla de 3
   TIM3->CCR1 = ARR_MAX - PWM_ADC; //negado (led prende con cero)
@@ -127,11 +134,13 @@ void calculos(void){
 /*Reescritura de Interruption Handlers*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
-	//timer seteado a 100ms
+	// Timer seteado a 100ms
   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-  //Transmit UART
+  // UART
   HAL_UART_Receive_IT(&huart1, (const u_int8_t*)recieved, strlen(recieved));
-  HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)uartTransmit, strlen(uartTransmit));
+  if (imprimir_en_uart){
+    HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)message, strlen(message));
+  }
 }
 
 /**

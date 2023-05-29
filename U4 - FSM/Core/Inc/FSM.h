@@ -12,6 +12,9 @@
 						"2. Mostrar valores medidos en tiempo real"\
 						"3. Ajustes"
 #define IMPRIMIR true
+#define GO_BACK "Presione q para volver."
+
+extern const char* uartTransmit;
 
 enum STATES {
 	MENU, //esperando instrucciones
@@ -30,6 +33,7 @@ Se le pasa la instruccion recibida por UART y es validada.
 */
 void state_menu(void);
 /*
+Va a imprimir una medicion y esperar una 'q' para salir.
 */
 void state_unicamed(void);
 /*
