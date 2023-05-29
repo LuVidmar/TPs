@@ -4,6 +4,15 @@
         "stm32f1xx_hal_def.h": "c",
         "stm32_hal_legacy.h": "c",
         "stddef.h": "c",
-        "stm32f1xx.h": "c"
+        "stm32f1xx.h": "c",
+        "stdlib.h": "c",
+        "stm32f1xx_hal.h": "c",
+        "stm32f1xx_hal_conf.h": "c",
+        "stdint.h": "c",
+        "main.h": "c",
+        "dwt_delay.h": "c",
+        "lcd16x2_cfg.h": "c",
+        "adc.h": "c",
+        "tim.h": "c"
     }
 }

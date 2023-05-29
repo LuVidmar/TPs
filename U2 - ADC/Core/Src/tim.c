@@ -67,6 +67,14 @@ void MX_TIM2_Init(void)
 
 }
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+	//timer seteado a 100ms
+	//a la 5ta interrupcion pasaron 0.5 segundos
+    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+   	HAL_ADC_Start_IT(&hadc1); // inicio la conversion del adc
+}
+
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
 {
 

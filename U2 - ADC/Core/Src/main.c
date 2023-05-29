@@ -23,42 +23,13 @@
 #include "tim.h"
 #include "gpio.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
-
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
+/* Variables Globales */
+uint16_t lectura = 0; //Variable para guardar el valor del ADC
+uint16_t parteEntera = 0; //Variable para guardar la parte entera del valor del ADC
+uint16_t parteDec = 0; //Variable para guardar la parte decimal del valor del ADC
+char formatted[16] = {0}; //Variable para guardar el string formateado para imprimir en el LCD
 
 /**
   * @brief  The application entry point.
@@ -66,44 +37,45 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-  /* USER CODE BEGIN Init */
 
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
 
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM2_Init();
   MX_ADC1_Init();
-  /* USER CODE BEGIN 2 */
 
-  /* USER CODE END 2 */
+  /* Inicializacion de LCD */
+  LCD_Init();
+  LCD_Clear();
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+  /* Calibracion ADC */
+  HAL_ADCEx_Calibration_Start(&hadc1);
+
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+	  // Dos decimales - No podemos hacer operaciones con decimales
+	  // Separamos el numero en parte entera y parte decimal
+	  parteEntera = ((AD_RES * REFVOLT) / 10) / BITSONADC; //Hacemos las operaciones como ints (los decimales se pierden)
+    /*
+    Para la parte decimal hacemo un corrimiento
+    del numero para que los decimales "sean enteros" y le
+    restamos la parte entera para solo quedarnos con lo decimal
+    */
+	  parteDec = ((AD_RES * REFVOLT * 10) / BITSONADC) - (parteEntera * 100);
+    /* Concatenamos y guardamos en un string la parte entera, la coma, la parte decimal y
+    "V" para imprimirlo por pantalla */
+	  sprintf(formatted,"%d.%d V",parteEntera,parteDec);
+	  LCD_Clear(); // limpio la pantalla antes de escribir el nuevo valor y evitar que queden cosas impresas en la pantalla que no necesito
+	  LCD_SetCursor(1, 1); //seteo el cursor en la primer fila y columna
+	  LCD_WriteString("CONVERSION ADC:"); //Dejamos esto dentro del while debido q a que impiamos la pantalla continuamente
+	  LCD_SetCursor(2, 1); //seteo el cursor en la 2da fila y 1er columna
+	  LCD_WriteString(formatted); // escribo el string generado por el ADC
+	  DWT_Delay_ms(400); // hago una espera para que no refresque tan rapido
   }
-  /* USER CODE END 3 */
+
 }
 
 /**

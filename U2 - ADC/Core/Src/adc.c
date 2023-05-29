@@ -20,9 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "adc.h"
 
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
+uint16_t AD_RES = 0; //Variable para guardar el valor del ADC
 
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
@@ -69,6 +67,13 @@ void MX_ADC1_Init(void)
   /* USER CODE END ADC1_Init 2 */
 
 }
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+    // Read & Update The ADC Result
+    AD_RES = HAL_ADC_GetValue(&hadc1);
+}
+
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 {
