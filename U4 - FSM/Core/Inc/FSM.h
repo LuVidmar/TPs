@@ -14,7 +14,7 @@
 #define IMPRIMIR true
 #define GO_BACK "Presione q para volver."
 
-extern const char* uartTransmit;
+extern char uartTransmit[24];
 
 enum STATES {
 	MENU, //esperando instrucciones
