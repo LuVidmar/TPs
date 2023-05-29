@@ -33,6 +33,7 @@ extern "C" {
 #include "../../Drivers/ECU/Inc/LCD16x2_cfg.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 /* Defines ----------------------------------------------------------*/
 #define BITSONADC 4096 //ADC de 12 bits
@@ -40,6 +41,12 @@ extern "C" {
 #define ARR_MAX 65535 //ARR maximo
 
 extern uint16_t AD_RES;
+
+/* FSM Variables */
+extern uint32_t state; // Estado actual
+extern char* message; // Mensaje a mostrar en UART
+extern char* recieved; // Input de UART
+extern bool imprimir_en_lcd; // Flag para imprimir en LCD
 
 /* Funciones */
 void calculos(void);

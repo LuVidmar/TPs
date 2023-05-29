@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 #define MENU_OPTIONS 	"*** MENU ***"\
 						"1. Mostrar último valor medido"\
@@ -18,11 +19,6 @@ enum STATES {
 	STREAM, //muestra las mediciones cada 0.5 seg
 	CONFIG // configuracion de layout
 };
-
-/* Variables */
-uint32_t state; // Estado actual
-char* message; // Mensaje a mostrar en UART
-bool imprimir_en_lcd; // Flag para imprimir en LCD
 
 /* Funciones */
 // Inicializacion

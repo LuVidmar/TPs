@@ -74,6 +74,7 @@ int main(void)
     // FSM
     switch (state){
       case MENU:
+        state_menu();
         break;
       case UNICAMED:
         break;
@@ -129,6 +130,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 	//timer seteado a 100ms
   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   //Transmit UART
+  HAL_UART_Receive_IT(&huart1, (const u_int8_t*)recieved, strlen(recieved));
   HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)uartTransmit, strlen(uartTransmit));
 }
 
