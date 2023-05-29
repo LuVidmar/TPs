@@ -1,0 +1,12 @@
+
+# VS Code files
+.vscode
+/**/.vscode
+
+# Build files
+/**/build
+
+# Core MXCube generated files
+/**/.mxproject
+/**/.mxmetadata
+/**/mx.scratch
