@@ -19,3 +19,7 @@ Configurar la comunicación serie con los siguientes parámetros: 9600 8N1, es d
 ![pinout](Documentacion/pinout.png)
 
 ### Circuito
+
+## Codigo
+
+Los archivos generales fueron generados con el programa [STM32Cube](https://www.st.com/en/development-tools/stm32cubemx.html). Luego se adapto el Makefile,y se agregaron las librerias para el display LCD provistos por la catedra.
