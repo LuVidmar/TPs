@@ -83,8 +83,10 @@ int main(void)
         state_unicamed();
         break;
       case STREAM:
+        state_stream();
         break;
       case CONFIG:
+        state_config();
         break;
       default:
         break;

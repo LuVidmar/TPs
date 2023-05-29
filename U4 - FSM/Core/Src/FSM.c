@@ -53,15 +53,29 @@ void state_unicamed(){
 		imprimir_en_uart = IMPRIMIR;
 	}
 
+	// Revisar si se quiere volver
 	if(strcmp(recieved,"q")){
 		state = MENU;
 		runned_once = false;
+		imprimir_en_uart = !IMPRIMIR;
 	}
 
 }
+
 void state_stream(){
+
+	imprimir_en_uart = IMPRIMIR;
+	strcpy(message,uartTransmit);
+
+	// Revisar si se quiere volver
+	if(strcmp(recieved,"q")){
+		imprimir_en_uart = !IMPRIMIR;
+		state = MENU;
+	}
+
 	return;
 }
+
 void state_config(){
 	return;
 }
