@@ -1,40 +1,25 @@
 #include "FSM.h"
 
-FSM_t inicializarFSM(void){
-	FSM_t FSM;
-	FSM.state = MENU;
-	return FSM;
+void inicializarFSM(void){
+	state = MENU; // Estado inicial
+	message = (char*)malloc(100 * sizeof(char)); // Reservo memoria para el mensaje
+	message = MENU_OPTIONS; // Mensaje inicial (menu)
+	imprimir_en_lcd = !IMPRIMIR; // Inicialmente no imprimimos en lcd
 }
-
-void pasarDeEstado(FSM_t FSM, uint32_t estado){
-	if(!estadoValido(FSM, estado)){ // El estado no es valido
-		return;
-	}
-
-	FSM.state = estado;
-}
-
-static bool estadoValido(FSM_t FSM, uint32_t estado){
-	if (estado > 0 && estado < MENU){
-		return true; // para que sea valido debe estar entre 0 y default
-	}
-	return false;
-}
-
 
 /**********************************/
 /*******ESTADOS DE LA MdE**********/
 /**********************************/
-void Emenu(FSM_t fsm){
+uint32_t state_menu(){
 	return;
 }
-void Eunicamed(FSM_t fsm){
+void state_unicamed(){
 	return;
 }
-void Estream(FSM_t fsm){
+void state_stream(){
 	return;
 }
-void Econfig(FSM_t fsm){
+void state_config(){
 	return;
 }
 /**********************************/

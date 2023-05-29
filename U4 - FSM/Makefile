@@ -36,6 +36,7 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
+Core/Src/FSM.c \
 Core/Src/main.c \
 Core/Src/gpio.c \
 Core/Src/adc.c \

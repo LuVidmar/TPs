@@ -41,6 +41,10 @@ extern "C" {
 
 extern uint16_t AD_RES;
 
+/* Funciones */
+void calculos(void);
+void refrescar_lcd(bool);
+
 /* Interrupciones */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*);
 

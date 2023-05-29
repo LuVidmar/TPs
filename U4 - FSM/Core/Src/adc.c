@@ -127,4 +127,5 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
     // Read & Update The ADC Result
     AD_RES = HAL_ADC_GetValue(&hadc1);
+    HAL_ADC_Start_IT(&hadc1); // inicio la conversion del adc nuevamente
 }

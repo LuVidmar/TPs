@@ -6,29 +6,41 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-typedef enum STATES {
+#define MENU_OPTIONS 	"*** MENU ***"\
+						"1. Mostrar último valor medido"\
+						"2. Mostrar valores medidos en tiempo real"\
+						"3. Ajustes"
+#define IMPRIMIR true
+
+enum STATES {
 	MENU, //esperando instrucciones
 	UNICAMED, //muestra la ultima medicion
 	STREAM, //muestra las mediciones cada 0.5 seg
 	CONFIG // configuracion de layout
-} states_t;
+};
 
-typedef struct FSM {
+/* Variables */
+uint32_t state; // Estado actual
+char* message; // Mensaje a mostrar en UART
+bool imprimir_en_lcd; // Flag para imprimir en LCD
 
-	uint32_t state; // Estado actual
+/* Funciones */
+// Inicializacion
+void inicializarFSM(void);
+//Estados
 
-} FSM_t;
-
-// Devuelve una FSM con el estado inicial
-FSM_t inicializarFSM(void);
-// Cambia el estado de la FSM
-void pasarDeEstado(FSM_t, uint32_t);
-// Devuelve true si el estado es valido
-static bool estadoValido(FSM_t, uint32_t);
-
-void Emenu(FSM_t);
-void Eunicamed(FSM_t);
-void Estream(FSM_t);
-void Econfig(FSM_t);
+/*
+Se le pasa la instruccion recibida por UART y es validada.
+*/
+void state_menu(void);
+/*
+*/
+void state_unicamed(void);
+/*
+*/
+void state_stream(void);
+/*
+*/
+void state_config(void);
 
 #endif /* SRC_FSM_H_ */
