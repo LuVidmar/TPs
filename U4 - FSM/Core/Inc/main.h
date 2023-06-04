@@ -19,6 +19,7 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
+#pragma once
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -28,22 +29,19 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
-#include "../../ECU/Inc/DWT_Delay.h"
-#include "../../ECU/Inc/LCD16x2_cfg.h"
-
-/* Std libraries */
+#include "../../Drivers/ECU/Inc/DWT_Delay.h"
+#include "../../Drivers/ECU/Inc/LCD16x2_cfg.h"
+/* Standard */
 #include <string.h>
 #include <stdio.h>
-#include <stdbool.h>
-
 /* Modules */
+#include "adc.h"
 #include "tim.h"
 #include "usart.h"
-#include "adc.h"
 #include "gpio.h"
 #include "FSM.h"
 
-/* Exported constants --------------------------------------------------------*/
+/* Defines ----------------------------------------------------------*/
 #define BITSONADC 4096 //ADC de 12 bits
 #define REFVOLT 33     //Amplitud 0-3.3V
 #define ARR_MAX 65535
@@ -55,7 +53,7 @@ extern char uartTransmitStream[26];
 void calculos(void);
 void refrescar_lcd(bool);
 
-/* Exported functions prototypes ---------------------------------------------*/
+/* Handler */
 void Error_Handler(void);
 
 #ifdef __cplusplus
