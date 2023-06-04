@@ -18,18 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "adc.h"
-#include "dma.h"
-#include "tim.h"
-#include "usart.h"
-#include "gpio.h"
 
 /* Variables to use */
 uint16_t PWM_ADC = 0;
 uint16_t parteEntera = 0;
 uint16_t parteDec = 0;
 char formatted[8] = {0};
-char uartTransmit[24] = {0};
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -53,14 +47,22 @@ int main(void)
   MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM2_Init();
-  MX_TIM3_Init();
-  MX_USART1_UART_Init();
+  //MX_TIM3_Init();
+  //MX_USART1_UART_Init();
 
-  // LCD init
+  /* ADC init */
+  HAL_ADCEx_Calibration_Start(&hadc1);
+  /* Timer init */
+  HAL_TIM_Base_Start_IT(&htim2);
+  //HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  /* LCD init */
   LCD_Init();
   LCD_Clear();
-  // ADC init
-  HAL_ADCEx_Calibration_Start(&hadc1);
+
+  /* LCD primera linea */
+  LCD_Clear(); // limpio la pantalla antes de escribir el nuevo valor y evitar que queden cosas impresas en la pantalla que no necesito
+  LCD_SetCursor(1, 1); //seteo el cursor en la primer fila y columna
+  LCD_WriteString("CONVERSION ADC:"); //Dejamos esto dentro del while debido q a que impiamos la pantalla continuamente
 
   while (1)
   {
@@ -80,29 +82,15 @@ int main(void)
     sprintf(formatted,"%d.%d V",parteEntera,parteDec);
     sprintf(uartTransmit,"Tension Medida: %s\n\r",formatted); // para el uart
 
-    LCD_Clear(); // limpio la pantalla antes de escribir el nuevo valor y evitar que queden cosas impresas en la pantalla que no necesito
-    LCD_SetCursor(1, 1); //seteo el cursor en la primer fila y columna
-    LCD_WriteString("CONVERSION ADC:"); //Dejamos esto dentro del while debido q a que impiamos la pantalla continuamente
     LCD_SetCursor(2, 1); //seteo el cursor en la 2da fila y 1er columna
     LCD_WriteString(formatted); // escribo el string generado por el ADC
     DWT_Delay_ms(200); // hago una espera para que no refresque tan rapido
 
     /*PWM*/
-    PWM_ADC = AD_RES * ARR_MAX / BITSONADC; //regla de 3
-    TIM3->CCR1 = ARR_MAX - PWM_ADC; //negado (led prende con cero)
+    /*PWM_ADC = AD_RES * ARR_MAX / BITSONADC; //regla de 3
+    TIM3->CCR1 = ARR_MAX - PWM_ADC; //negado (led prende con cero)*/
   }
 
-}
-
-/*Reescritura de Interruption Handlers*/
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
-{
-	//timer seteado a 100ms
-	//a la 5ta interrupcion pasaron 0.5 segundos
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-   	HAL_ADC_Start_IT(&hadc1); // inicio la conversion del adc
-   	//Transmit UART
-   	HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)uartTransmit, strlen(uartTransmit));
 }
 
 /**
@@ -147,10 +135,6 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 }
-
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.

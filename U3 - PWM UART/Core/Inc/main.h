@@ -31,18 +31,20 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 #include "../../Drivers/ECU/Inc/DWT_Delay.h"
 #include "../../Drivers/ECU/Inc/LCD16x2_cfg.h"
+/* Standard */
 #include <string.h>
 #include <stdio.h>
+/* Modules */
+#include "adc.h"
+#include "dma.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
 
 /* Defines ----------------------------------------------------------*/
 #define BITSONADC 4096 //ADC de 12 bits
 #define REFVOLT 33     //Amplitud 0-3.3V
 #define ARR_MAX 65535 //ARR maximo
-
-extern uint16_t AD_RES;
-
-/* Interrupciones */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*);
 
 /* Handler */
 void Error_Handler(void);

@@ -62,6 +62,7 @@ int main(void)
   LCD_Clear();
   // ADC init
   HAL_ADCEx_Calibration_Start(&hadc1);
+  HAL_ADC_Start_IT(&hadc1);
   //Timer Init
   HAL_TIM_PWM_Start_IT(&htim3, TIM_CHANNEL_1);
   HAL_TIM_Base_Start_IT(&htim2);

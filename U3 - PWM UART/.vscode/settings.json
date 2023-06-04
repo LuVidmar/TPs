@@ -1,4 +1,14 @@
 {
     "cortex-debug.gdbPath": "/usr/bin/gdb",
     "cortex-debug.stutilPath": "/usr/bin/st-util",
+    "files.associations": {
+        "dma.h": "c",
+        "tim.h": "c",
+        "gpio.h": "c",
+        "adc.h": "c",
+        "usart.h": "c",
+        "stm32f1xx_hal.h": "c",
+        "stm32f1xx_it.h": "c",
+        "main.h": "c"
+    },
 }

@@ -28,7 +28,8 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-/* ADC */
+/* Variables */
+extern uint16_t AD_RES;
 extern ADC_HandleTypeDef hadc1;
 
 /* Inicializaciones */
@@ -42,4 +43,3 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef*);
 #endif
 
 #endif /* __ADC_H__ */
-

@@ -93,9 +93,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 
     __HAL_LINKDMA(adcHandle,DMA_Handle,hdma_adc1);
 
-  /* USER CODE BEGIN ADC1_MspInit 1 */
-
-  /* USER CODE END ADC1_MspInit 1 */
   }
 }
 
@@ -104,9 +101,6 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
   if(adcHandle->Instance==ADC1)
   {
-  /* USER CODE BEGIN ADC1_MspDeInit 0 */
-
-  /* USER CODE END ADC1_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_ADC1_CLK_DISABLE();
 
@@ -117,14 +111,17 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
     /* ADC1 DMA DeInit */
     HAL_DMA_DeInit(adcHandle->DMA_Handle);
-  /* USER CODE BEGIN ADC1_MspDeInit 1 */
-
-  /* USER CODE END ADC1_MspDeInit 1 */
   }
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
-    // Read & Update The ADC Result
-    AD_RES = HAL_ADC_GetValue(&hadc1);
+  // Read & Update The ADC Result
+  AD_RES = HAL_ADC_GetValue(&hadc);
+}
+
+void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  // Read & Update The ADC Result
+  uint32_t cac = HAL_ADC_GetValue(&hadc);
 }

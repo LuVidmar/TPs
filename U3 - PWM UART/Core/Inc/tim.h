@@ -27,31 +27,23 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "usart.h"
 
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
+/* Variables */
 extern TIM_HandleTypeDef htim2;
-
 extern TIM_HandleTypeDef htim3;
 
-/* USER CODE BEGIN Private defines */
-
-/* USER CODE END Private defines */
-
+/* Inicializaciones */
 void MX_TIM2_Init(void);
 void MX_TIM3_Init(void);
 
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 
-/* USER CODE BEGIN Prototypes */
-
-/* USER CODE END Prototypes */
+/* Interrupciones */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* __TIM_H__ */
-
