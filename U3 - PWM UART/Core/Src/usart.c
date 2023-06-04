@@ -20,7 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
 
-char uartTransmit[24] = {0};
+char uartTransmit[26] = {0};
 UART_HandleTypeDef huart1;
 
 /* USART1 init function */
@@ -55,8 +55,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     /**USART1 GPIO Configuration
     PA9     ------> USART1_TX
     PA10     ------> USART1_RX
-    PA11     ------> USART1_CTS
-    PA12     ------> USART1_RTS
     */
     GPIO_InitStruct.Pin = GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;

@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* Variables */
-extern char uartTransmit[24];
+extern char uartTransmit[26];
 extern UART_HandleTypeDef huart1;
 
 /* Interrupciones */

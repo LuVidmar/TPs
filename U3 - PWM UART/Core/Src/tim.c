@@ -64,7 +64,7 @@ void MX_TIM3_Init(void)
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim3.Init.Period = 65535;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_PWM_Init(&htim3) != HAL_OK)
   {
     Error_Handler();
@@ -163,5 +163,5 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   HAL_ADC_Start_IT(&hadc1); // inicio la conversion del adc
   //Transmit UART
-  //HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)uartTransmit, strlen(uartTransmit));
+  HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)uartTransmit, strlen(uartTransmit));
 }
