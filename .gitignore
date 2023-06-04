@@ -1,7 +1,6 @@
 
 # VS Code files
 .vscode
-/**/.vscode
 
 # Build files
 /**/build
