@@ -28,6 +28,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usart.h"
+#include "adc.h"
 
 /* Variables */
 extern TIM_HandleTypeDef htim2;

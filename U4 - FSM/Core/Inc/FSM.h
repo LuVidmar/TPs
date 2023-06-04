@@ -2,13 +2,16 @@
 #ifndef SRC_FSM_H_
 #define SRC_FSM_H_
 
+/* Std lib */
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <string.h>
 
-#include "DWT_Delay.h"
+/* Libs */
+#include "main.h"
 
+/* Constants */
 #define MENU_OPTIONS 	"*** MENU ***\n\r"\
 						"1. Mostrar último valor medido\n\r"\
 						"2. Mostrar valores medidos en tiempo real\n\r"\
@@ -16,8 +19,13 @@
 #define IMPRIMIR true
 #define GO_BACK "Presione q para volver.\n\r"
 
-extern char uartTransmit[25];
-extern char uartTransmitStream[25];
+/* FSM Variables */
+extern uint32_t state; // Estado actual
+extern char* message; // Mensaje a mostrar en UART
+extern char* recieved; // Input de UART
+extern bool imprimir_en_lcd; // Flag para imprimir en LCD
+extern bool imprimir_en_uart;
+extern int stream_ms;
 
 enum STATES {
 	MENU, //esperando instrucciones
@@ -30,8 +38,6 @@ enum STATES {
 /* Funciones */
 // Inicializacion
 void inicializarFSM(void);
-//Estados
-
 /*
 Se le pasa la instruccion recibida por UART y es validada.
 */

@@ -30,59 +30,33 @@ extern "C" {
 #include "stm32f1xx_hal.h"
 #include "../../ECU/Inc/DWT_Delay.h"
 #include "../../ECU/Inc/LCD16x2_cfg.h"
-#define BITSONADC 4096 //ADC de 12 bits
-#define REFVOLT 33     //Amplitud 0-3.3V
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Exported types ------------------------------------------------------------*/
-/* USER CODE BEGIN ET */
-
-/* USER CODE END ET */
-
-/* Exported constants --------------------------------------------------------*/
-/* USER CODE BEGIN EC */
-#define ARR_MAX 65535
+/* Std libraries */
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
 
-/* FSM Variables */
-extern uint32_t state; // Estado actual
-extern char* message; // Mensaje a mostrar en UART
-extern char* recieved; // Input de UART
-extern bool imprimir_en_lcd; // Flag para imprimir en LCD
-extern bool imprimir_en_uart;
-extern int stream_ms;
+/* Modules */
+#include "tim.h"
+#include "usart.h"
+#include "adc.h"
+#include "gpio.h"
+#include "FSM.h"
 
+/* Exported constants --------------------------------------------------------*/
+#define BITSONADC 4096 //ADC de 12 bits
+#define REFVOLT 33     //Amplitud 0-3.3V
+#define ARR_MAX 65535
+
+/* Variables */
+extern char uartTransmitStream[26];
+
+/* Functions */
 void calculos(void);
 void refrescar_lcd(bool);
 
-
-/* USER CODE END EC */
-
-/* Exported macro ------------------------------------------------------------*/
-/* USER CODE BEGIN EM */
-
-/* USER CODE END EM */
-
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
-
-/* USER CODE BEGIN EFP */
-
-/* USER CODE END EFP */
-
-/* Private defines -----------------------------------------------------------*/
-
-/* USER CODE BEGIN Private defines */
-
-/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

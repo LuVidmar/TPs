@@ -86,9 +86,6 @@ void state_stream(){
 
 void state_config(){
 
-
-
-
 	// Revisar si se quiere volver
 	if(recieved[0]=='q'){
 		imprimir_en_uart = !IMPRIMIR;
