@@ -19,7 +19,6 @@
 /* USER CODE END Header */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#pragma once
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -29,18 +28,27 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
-#include "../../Drivers/ECU/Inc/DWT_Delay.h"
-#include "../../Drivers/ECU/Inc/LCD16x2_cfg.h"
+#include "../../ECU/Inc/DWT_Delay.h"
+#include "../../ECU/Inc/LCD16x2_cfg.h"
+#define BITSONADC 4096 //ADC de 12 bits
+#define REFVOLT 33     //Amplitud 0-3.3V
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
+
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
+
+/* USER CODE END ET */
+
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
+#define ARR_MAX 65535
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-
-/* Defines ----------------------------------------------------------*/
-#define BITSONADC 4096 //ADC de 12 bits
-#define REFVOLT 33     //Amplitud 0-3.3V
-#define ARR_MAX 65535 //ARR maximo
-
-extern uint16_t AD_RES;
 
 /* FSM Variables */
 extern uint32_t state; // Estado actual
@@ -48,16 +56,33 @@ extern char* message; // Mensaje a mostrar en UART
 extern char* recieved; // Input de UART
 extern bool imprimir_en_lcd; // Flag para imprimir en LCD
 extern bool imprimir_en_uart;
+extern int stream_ms;
 
-/* Funciones */
 void calculos(void);
 void refrescar_lcd(bool);
 
-/* Interrupciones */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*);
 
-/* Handler */
+/* USER CODE END EC */
+
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
+
+/* USER CODE END EM */
+
+void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
+
+/* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
+
+/* USER CODE BEGIN EFP */
+
+/* USER CODE END EFP */
+
+/* Private defines -----------------------------------------------------------*/
+
+/* USER CODE BEGIN Private defines */
+
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

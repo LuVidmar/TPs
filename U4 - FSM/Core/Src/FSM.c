@@ -7,12 +7,14 @@ char* recieved; // Input de UART
 bool imprimir_en_lcd; // Flag para imprimir en LCD
 bool imprimir_en_uart;
 static bool runned_once = false;
+int stream_ms = 500;
 
 void inicializarFSM(void){
-	state = MENU; // Estado inicial
+	state = START; // Estado inicial
 
-	message = (char*)malloc(100 * sizeof(char)); // Reservo memoria para el mensaje
-	message = MENU_OPTIONS; // Mensaje inicial (menu)
+	message = (char*)malloc(200 * sizeof(char)); // Reservo memoria para el mensaje
+	strcpy(message,MENU_OPTIONS); // Mensaje inicial (menu)
+
 	
 	recieved = (char*)malloc(10 * sizeof(char)); // Reservo memoria para recibir
 	
@@ -25,20 +27,22 @@ void inicializarFSM(void){
 /**********************************/
 void state_menu(){
 	
-	// Imprimo el menu
-	imprimir_en_uart = IMPRIMIR;
-	// Validaciones
-	if (strlen(recieved) != 1){
-		return;
+	if (state == START){
+		strcpy(message,MENU_OPTIONS);
+		imprimir_en_uart = IMPRIMIR;
+		state = MENU;
+	}
+	else if (state == MENU){
+		imprimir_en_uart = !IMPRIMIR;
 	}
 	// Si se recibe un estado valido, cambio de estado
-	else if (strcmp(recieved,"1")){
+	if (recieved[0]=='1'){
 		state = UNICAMED;
 	}
-	else if (strcmp(recieved,"2")){
+	else if (recieved[0]=='2'){
 		state = STREAM;
 	}
-	else if (strcmp(recieved,"3")){
+	else if (recieved[0]=='3'){
 		state = CONFIG;
 	}
 	return;
@@ -49,34 +53,47 @@ void state_unicamed(){
 	if(!runned_once){
 		runned_once = true;
 		// Imprimo la ultima medicion
+		memset(message,0,strlen(message));
 		strcpy(message,strcat(uartTransmit,GO_BACK));
 		imprimir_en_uart = IMPRIMIR;
+		return;
 	}
-
+	imprimir_en_uart = !IMPRIMIR;
 	// Revisar si se quiere volver
-	if(strcmp(recieved,"q")){
-		state = MENU;
+	if(recieved[0]=='q'){
+		state = START;
 		runned_once = false;
 		imprimir_en_uart = !IMPRIMIR;
+		return;
 	}
-
 }
 
 void state_stream(){
 
 	imprimir_en_uart = IMPRIMIR;
-	strcpy(message,uartTransmit);
+
+	memset(message,0,strlen(message));
+	strcpy(message,strcat(uartTransmitStream,GO_BACK));
+	DWT_Delay_ms(stream_ms);
 
 	// Revisar si se quiere volver
-	if(strcmp(recieved,"q")){
+	if(recieved[0]=='q'){
 		imprimir_en_uart = !IMPRIMIR;
-		state = MENU;
+		state = START;
 	}
-
 	return;
 }
 
 void state_config(){
+
+
+
+
+	// Revisar si se quiere volver
+	if(recieved[0]=='q'){
+		imprimir_en_uart = !IMPRIMIR;
+		state = START;
+	}
 	return;
 }
 /**********************************/
