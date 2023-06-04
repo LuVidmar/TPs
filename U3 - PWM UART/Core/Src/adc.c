@@ -62,9 +62,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(adcHandle->Instance==ADC1)
   {
-  /* USER CODE BEGIN ADC1_MspInit 0 */
-
-  /* USER CODE END ADC1_MspInit 0 */
     /* ADC1 clock enable */
     __HAL_RCC_ADC1_CLK_ENABLE();
 
@@ -79,9 +76,6 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     /* ADC1 interrupt Init */
     HAL_NVIC_SetPriority(ADC1_2_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
-  /* USER CODE BEGIN ADC1_MspInit 1 */
-
-  /* USER CODE END ADC1_MspInit 1 */
   }
 }
 
@@ -100,20 +94,11 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 
     /* ADC1 interrupt Deinit */
     HAL_NVIC_DisableIRQ(ADC1_2_IRQn);
-  /* USER CODE BEGIN ADC1_MspDeInit 1 */
-
-  /* USER CODE END ADC1_MspDeInit 1 */
   }
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 {
   // Read & Update The ADC Result
-  AD_RES = HAL_ADC_GetValue(&hadc);
-}
-
-void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)
-{
-  // Read & Update The ADC Result
-  uint32_t cac = HAL_ADC_GetValue(&hadc);
+  AD_RES = HAL_ADC_GetValue(&hadc1);
 }

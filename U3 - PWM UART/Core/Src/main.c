@@ -82,7 +82,7 @@ int main(void)
   HAL_ADCEx_Calibration_Start(&hadc1);
   /* Timer init */
   HAL_TIM_Base_Start_IT(&htim2);
-  //HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   /* LCD init */
   LCD_Init();
   LCD_Clear();
@@ -93,7 +93,6 @@ int main(void)
   LCD_WriteString("CONVERSION ADC:"); //Dejamos esto dentro del while debido q a que impiamos la pantalla continuamente
 
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
     // Dos decimales - No podemos hacer operaciones con decimales
@@ -117,8 +116,8 @@ int main(void)
     DWT_Delay_ms(200); // hago una espera para que no refresque tan rapido
 
     /*PWM*/
-    /*PWM_ADC = AD_RES * ARR_MAX / BITSONADC; //regla de 3
-    TIM3->CCR1 = ARR_MAX - PWM_ADC; //negado (led prende con cero)*/
+    PWM_ADC = AD_RES * ARR_MAX / BITSONADC; //regla de 3
+    TIM3->CCR1 = ARR_MAX - PWM_ADC; //negado (led prende con cero)
   }
 
 }
