@@ -17,6 +17,7 @@ Configurar la comunicación serie con los siguientes parámetros: 9600 8N1, es d
 
 ### Pinout
 ![pinout](Documentacion/pinout.png)
+![breadboard](Documentacion/breadboard.svg)
 
 ### Circuito
 
