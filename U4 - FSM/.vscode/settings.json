@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "lcd16x2_cfg.h": "c",
+        "fsm.h": "c",
+        "stdlib.h": "c"
+    }
+}
