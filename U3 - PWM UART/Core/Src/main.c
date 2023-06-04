@@ -18,6 +18,34 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "tim.h"
+#include "usart.h"
+#include "gpio.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
+
+/* Private typedef -----------------------------------------------------------*/
+/* USER CODE BEGIN PTD */
+
+/* USER CODE END PTD */
+
+/* Private define ------------------------------------------------------------*/
+/* USER CODE BEGIN PD */
+
+/* USER CODE END PD */
+
+/* Private macro -------------------------------------------------------------*/
+/* USER CODE BEGIN PM */
+
+/* USER CODE END PM */
+
+/* Private variables ---------------------------------------------------------*/
+
+/* USER CODE BEGIN PV */
 
 /* Variables to use */
 uint16_t PWM_ADC = 0;
@@ -44,11 +72,11 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_ADC1_Init();
   MX_TIM2_Init();
-  //MX_TIM3_Init();
-  //MX_USART1_UART_Init();
+  MX_TIM3_Init();
+  MX_USART1_UART_Init();
+  /* USER CODE BEGIN 2 */
 
   /* ADC init */
   HAL_ADCEx_Calibration_Start(&hadc1);
@@ -64,6 +92,8 @@ int main(void)
   LCD_SetCursor(1, 1); //seteo el cursor en la primer fila y columna
   LCD_WriteString("CONVERSION ADC:"); //Dejamos esto dentro del while debido q a que impiamos la pantalla continuamente
 
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
     // Dos decimales - No podemos hacer operaciones con decimales

@@ -36,7 +36,6 @@ extern "C" {
 #include <stdio.h>
 /* Modules */
 #include "adc.h"
-#include "dma.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
