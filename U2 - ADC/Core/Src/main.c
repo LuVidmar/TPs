@@ -39,13 +39,15 @@ int main(void)
 {
   HAL_Init();
 
-
   SystemClock_Config();
 
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_TIM2_Init();
   MX_ADC1_Init();
+
+  /* Inicializacion de timer */
+  HAL_TIM_Base_Start_IT(&htim2);
 
   /* Inicializacion de LCD */
   LCD_Init();
