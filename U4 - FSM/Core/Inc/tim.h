@@ -28,7 +28,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "usart.h"
-#include "adc.h"
+#include "fsm.h"
 
 /* Variables */
 extern TIM_HandleTypeDef htim2;

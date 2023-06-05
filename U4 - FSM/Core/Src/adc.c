@@ -20,7 +20,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "adc.h"
 
-/* Global variables */
 uint16_t AD_RES = 0;
 
 ADC_HandleTypeDef hadc1;

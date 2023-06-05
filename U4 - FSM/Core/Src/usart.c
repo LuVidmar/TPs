@@ -20,7 +20,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
 
-char uartTransmit[26] = {0};
+char uartTransmit[200] = {0}; //Buffer para transmitir datos por uart
+char recieved[20] = {0}; //Buffer para recibir datos por uart
 UART_HandleTypeDef huart1;
 
 /* USART1 init function */
@@ -89,4 +90,8 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     /* USART1 interrupt Deinit */
     HAL_NVIC_DisableIRQ(USART1_IRQn);
   }
+}
+
+void imprimir_mensaje(){
+  HAL_UART_Transmit(&huart1, (uint8_t *)uartTransmit, strlen(uartTransmit), 1000);
 }

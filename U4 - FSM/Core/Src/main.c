@@ -19,17 +19,18 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+/* Variables to use */
+uint16_t timeout = 500; // 500ms
+uint16_t multiplicador_mV = 1;
+uint16_t PWM_ADC = 0;
+uint16_t parteEntera = 0;
+uint16_t parteDec = 0;
+char formatted[8] = {0};
+char medicion[16] = {0};
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 
-/* Private user code ---------------------------------------------------------*/
-
-/* Variables Globales */
-uint16_t PWM_ADC = 0;
-uint16_t parteEntera;
-uint16_t parteDec;
-char formatted[8];
-char uartTransmitStream[26] = {0};
 
 /**
   * @brief  The application entry point.
@@ -38,123 +39,84 @@ char uartTransmitStream[26] = {0};
 int main(void)
 {
 
-  /* MCU Configuration--------------------------------------------------------*/
-
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
- 	HAL_Init();
+  HAL_Init();
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_TIM2_Init();
   MX_ADC1_Init();
+  MX_TIM2_Init();
   MX_TIM3_Init();
   MX_USART1_UART_Init();
+
+  /* ADC init */
+  HAL_ADCEx_Calibration_Start(&hadc1);
+  /* Timer init */
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
-
+  /* LCD init */
   LCD_Init();
   LCD_Clear();
-  HAL_ADCEx_Calibration_Start(&hadc1);
-  inicializarFSM();
 
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
-	// Calculos con medidas
-	calculos();
-	// Refresco de pantalla (sin impresion aun)
-	refrescar_lcd(imprimir_en_lcd);
-	// Tomar entrada
 
-	if (imprimir_en_uart){
-		HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)message, strlen(message));
-	}
-
-	// FSM
-	switch (state){
-    case START:
-      state_menu();
-      break;
-    case MENU:
-      state_menu();
-      break;
-    case UNICAMED:
-      state_unicamed();
-      break;
-    case STREAM:
-      state_stream();
-      break;
-    case CONFIG:
-      state_config();
-      break;
-    default:
-      break;
+    calculos(); // calculo la parte entera y decimal de la tension medida
+    
+    /* Formatteo */
+    if (multiplicador_mV == 1){
+      sprintf(formatted,"%d.%d V",parteEntera,parteDec);
     }
+    else{
+      sprintf(formatted,"%d mV",parteEntera * 1000 + parteDec * 10);
+    }
+    sprintf(medicion,"Tension Medida: %s\n\r",formatted); // para el uart
+
+    escribirDisplay(); // escribo en el display
+    
+    DWT_Delay_ms(timeout); // hago una espera para que no refresque tan rapido
+
+    /*PWM*/
+    PWM_ADC = AD_RES * ARR_MAX / BITSONADC; //regla de 3
+    TIM3->CCR1 = ARR_MAX - PWM_ADC;
+
+    /* Recibir de UART*/
+    HAL_UART_Receive_IT(&huart1, (uint8_t*)recieved, 1); //recibo 1 byte por interrupcion
+
+    /* FSM */
+    fsm(); // llamo a la maquina de estados
   }
-  /* USER CODE END 3 */
+
 }
 
-void refrescar_lcd(bool imprimir){
+/* Funciones de usuario */
+void calculos(){
+  // Dos decimales - No podemos hacer operaciones con decimales
+    // Separamos el numero en parte entera y parte decimal
+    parteEntera = ((AD_RES * REFVOLT) / 10) / BITSONADC; //Hacemos las operanciones como ints (los decimales se pierden)
+    /*
+    Para la parte decimal hacemo un corrimiento
+    del numero para que los decimales "sean enteros" y le
+    restamos la parte entera para solo quedarnos con lo decimal
+    */
+    parteDec = ((AD_RES * REFVOLT * 10) / BITSONADC) - (parteEntera * 100);
+    /*
+    Concatenamos y guardamos en un string la parte entera, la coma, la parte decimal
+    y "V" para imprimirlo por pantalla
+    */
+}
+
+void escribirDisplay(){
   LCD_Clear(); // limpio la pantalla antes de escribir el nuevo valor y evitar que queden cosas impresas en la pantalla que no necesito
   LCD_SetCursor(1, 1); //seteo el cursor en la primer fila y columna
-
-  if (imprimir){ // Solo imprimo si es necesario
-    LCD_WriteString("CONVERSION ADC:"); //Dejamos esto dentro del while debido q a que impiamos la pantalla continuamente
-  }
-
+  LCD_WriteString("CONVERSION ADC:"); //Dejamos esto dentro del while debido q a que impiamos la pantalla continuamente
   LCD_SetCursor(2, 1); //seteo el cursor en la 2da fila y 1er columna
-
-  if (imprimir){ // Solo imprimo si es necesario
-    LCD_WriteString(formatted); // escribo el string generado por el ADC
-  }
-
+  LCD_WriteString(formatted); // escribo el string generado por el ADC
 }
-
-void calculos(void){
-  // Dos decimales - No podemos hacer operaciones con decimales
-  // Separamos el numero en parte entera y parte decimal
-  parteEntera = ((AD_RES * REFVOLT) / 10) / BITSONADC; //Hacemos las operanciones como ints (los decimales se pierden)
-  /*
-  Para la parte decimal hacemo un corrimiento
-  del numero para que los decimales "sean enteros" y le
-  restamos la parte entera para solo quedarnos con lo decimal
-  */
-  parteDec = ((AD_RES * REFVOLT * 10) / BITSONADC) - (parteEntera * 100);
-  /*
-  Concatenamos y guardamos en un string la parte entera, la coma, la parte decimal
-  y "V" para imprimirlo por pantalla
-  */
-  sprintf(formatted,"%d.%d V",parteEntera,parteDec);
-  sprintf(uartTransmit,"Tension Medida: %s\n\r",formatted); // para el uart
-  sprintf(uartTransmitStream,"Tension Medida: %s ",formatted); // para el uart
-
-  /*PWM*/
-  PWM_ADC = AD_RES * ARR_MAX / BITSONADC; //regla de 3
-  TIM3->CCR1 = ARR_MAX - PWM_ADC; //negado (led prende con cero)
-}
-
-
-/*Reescritura de Interruption Handlers*/
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
-{
-    HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
-   	HAL_ADC_Start_IT(&hadc1); // inicio la conversion del adc
-   	//Transmit UART
-   	HAL_UART_Receive_IT(&huart1, (const u_int8_t*)recieved, 1);
-}
-
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-    // Read & Update The ADC Result
-    AD_RES = HAL_ADC_GetValue(&hadc1);
-}
-
 
 /**
   * @brief System Clock Configuration

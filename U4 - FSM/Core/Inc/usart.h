@@ -29,11 +29,15 @@ extern "C" {
 #include "main.h"
 
 /* Variables */
-extern char uartTransmit[26];
-extern UART_HandleTypeDef huart1;
+extern char uartTransmit[200]; // Buffer de transmisión
+extern char recieved[20]; //Buffer para recibir datos por uart
+extern UART_HandleTypeDef huart1; // Estructura de configuración de la UART
 
 /* Interrupciones */
 void MX_USART1_UART_Init(void);
+
+/* Funciones */
+void imprimir_mensaje(void);
 
 #ifdef __cplusplus
 }

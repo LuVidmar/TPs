@@ -39,22 +39,20 @@ extern "C" {
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
-#include "FSM.h"
+#include "fsm.h"
 
 /* Defines ----------------------------------------------------------*/
 #define BITSONADC 4096 //ADC de 12 bits
 #define REFVOLT 33     //Amplitud 0-3.3V
-#define ARR_MAX 65535
-
-/* Variables */
-extern char uartTransmitStream[26];
-
-/* Functions */
-void calculos(void);
-void refrescar_lcd(bool);
+#define ARR_MAX 65535 //ARR maximo
 
 /* Handler */
 void Error_Handler(void);
+
+/* Variables */
+extern char medicion[16];
+extern uint16_t multiplicador_mV; //Multiplicador para pasar de ADC a mV
+extern uint16_t timeout; // 500ms
 
 #ifdef __cplusplus
 }

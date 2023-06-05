@@ -43,7 +43,6 @@ Core/Src/tim.c \
 Core/Src/usart.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/stm32f1xx_hal_msp.c \
-Core/Src/system_stm32f1xx.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc_ex.c \
@@ -60,10 +59,11 @@ Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim_ex.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c \
+Core/Src/system_stm32f1xx.c \
 Drivers/ECU/Src/DWT_Delay.c \
 Drivers/ECU/Src/LCD16x2_cfg.c \
 Drivers/ECU/Src/LCD16x2.c \
-Core/Src/FSM.c
+Core/Src/fsm.c
 
 # ASM sources
 ASM_SOURCES =  \

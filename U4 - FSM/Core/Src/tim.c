@@ -162,6 +162,4 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 	//a la 5ta interrupcion pasaron 0.5 segundos
   HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
   HAL_ADC_Start_IT(&hadc1); // inicio la conversion del adc
-  //Transmit UART
-  HAL_UART_Transmit_IT(&huart1, (const u_int8_t*)uartTransmit, strlen(uartTransmit));
 }
