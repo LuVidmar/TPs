@@ -37,11 +37,14 @@ donde:
 ### Pinout
 ![pinout](Documentacion/pinout.png)
 
-### Circuito
+### Breadboard
+![pinout](Documentacion/breadboard.jpg)
+*Aclaraciones:*
+1. El LED se puede conectar al reves, es decir, con su terminal largo a V+ y su terminal corto al BluePill. En este caso deberemos tener en cuenta que con 3.3v tendriamos
 
 ### Flow
 ![flow-diagram](Documentacion/flow-diagram.jpg)
 
 ## Codigo
 
-Los archivos generales fueron generados con el programa [STM32Cube](https://www.st.com/en/development-tools/stm32cubemx.html). Luego se adapto el Makefile,y se agregaron las librerias para el display LCD provistos por la catedra.
+Los archivos generales fueron generados con el programa [STM32Cube](https://www.st.com/en/development-tools/stm32cubemx.html). Luego se adapto el Makefile, y se agregaron las librerias para el display LCD provistos por la catedra. Siguiendo el proceso descrito en el **README.md** del directorio base.
