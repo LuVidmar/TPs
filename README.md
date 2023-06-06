@@ -10,7 +10,8 @@ Algunos de caracter obligatorio, otros como guias de practica. Estos son los tra
 3. Startup Script
 4. ADC
 5. PWM & UART
-6. FSM & UART RX-TX.
+6. FSM & UART RX-TX
+7. TP Final - Ajedrez
 
 ## Trabajo Practico final
 
