@@ -49,7 +49,7 @@ int main(void)
   lcd_send_string("Init done!");
   HAL_UART_Transmit_IT(&huart1, "\n\rInit done!\n\r", 14);
 
-  HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1); // Start recieving data from UART1
+  HAL_UART_Receive_IT(&huart1, (uint8_t*)&UART1_rxBuffer, 1); // Start recieving data from UART1
   while (1)
   {
   }

@@ -29,7 +29,7 @@ extern "C" {
 #include "main.h"
 
 /* ------- Variables ------- */
-extern char UART1_rxBuffer[2];
+extern char UART1_rxBuffer;
 extern UART_HandleTypeDef huart1;
 
 void MX_USART1_UART_Init(void);
