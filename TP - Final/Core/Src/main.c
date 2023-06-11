@@ -48,7 +48,13 @@ int main(void)
   lcd_send_string("Hello World!");
   while (1)
   {
-
+    // Recieve data from UART
+    HAL_UART_Receive_IT(&huart1, (uint8_t *)rx_buffer, 1);
+    // Show data on UART
+    HAL_UART_Transmit(&huart1, (uint8_t *)rx_buffer, 1, 100);
+    // Send data to LCD
+    lcd_send_string(rx_buffer);
+    lcd_clear();
   }
 
 }
