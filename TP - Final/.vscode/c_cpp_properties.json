@@ -1,0 +1,42 @@
+{
+    "configurations": [
+        {
+            "name": "Embedded ARM",
+            "includePath": [
+                "${workspaceRoot}",
+                "${workspaceRoot}/Core/Inc",
+                "${workspaceRoot}/Drivers/STM32F1xx_HAL_Driver/Inc",
+                "${workspaceRoot}/Drivers/CMSIS/Include",
+                "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+                "/usr/arm-none-eabi/include",
+                "/lib/gcc/arm-none-eabi/12.2.0/include",
+                "/lib/gcc/arm-none-eabi/12.2.0/include-fixed",
+                "/usr/arm-none-eabi/include/machine",
+                "/usr/arm-none-eabi/include/newlib-nano",
+                "/usr/arm-none-eabi/include/sys"
+            ],
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32F103xx"
+            ],
+            "intelliSenseMode": "linux-gcc-arm",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}",
+                    "${workspaceRoot}/Core/Inc",
+                    "${workspaceRoot}/Drivers/STM32F1xx_HAL_Driver/Inc",
+                    "${workspaceRoot}/Drivers/CMSIS/Include",
+                    "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+                    "/usr/arm-none-eabi/include",
+                    "/lib/gcc/arm-none-eabi/12.2.0/include",
+                    "/lib/gcc/arm-none-eabi/12.2.0/include-fixed"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}
