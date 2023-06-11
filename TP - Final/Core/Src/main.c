@@ -44,9 +44,12 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM4_Init();
   lcd_init();
+
+  /* Start timers */
+  HAL_TIM_Base_Start_IT(&htim1);
   
   /* Show end of init */
-  lcd_send_string("Init done!");
+  lcd_change_text("Test");
   HAL_UART_Transmit_IT(&huart1, "\n\rInit done!\n\r", 14);
 
   HAL_UART_Receive_IT(&huart1, (uint8_t*)&UART1_rxBuffer, 1); // Start recieving data from UART1

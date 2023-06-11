@@ -361,6 +361,30 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
   }
 }
 
-/* USER CODE BEGIN 1 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+  static uint32_t timeLED = 0;
+  static uint32_t timeLCD = 0;
+  timeLED++;
+  timeLCD++;
 
-/* USER CODE END 1 */
+  /* TIM1 */ 
+  if (htim->Instance == TIM1){
+
+    //LED blink
+    if (timeLED == 1000){ //check if 1 second has passed
+      HAL_GPIO_TogglePin(GPIOC, ONBOARD_LED_Pin); //toggle the LED
+      timeLED = 0;
+    }
+
+    //Update display
+    if (timeLCD == REFRESH_RATE){ //check if 100ms has passed
+      //lcd_refresh();
+      //timeLCD = 0;
+    }
+
+  }
+
+  
+
+}

@@ -37,6 +37,7 @@ extern "C" {
 /* Std Libs */
 #include <stdint.h>
 #include <stdbool.h>
+#include <string.h>
 
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);

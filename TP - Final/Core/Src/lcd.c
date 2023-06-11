@@ -1,5 +1,7 @@
 #include "lcd.h"
 
+char lcd_buffer[16] = {0};
+
 void lcd_send_cmd (char cmd)
 {
   char data_u, data_l;
@@ -61,4 +63,14 @@ void lcd_clear (void)
 {
 	lcd_send_cmd(0x01);
 	HAL_Delay(1);
+}
+
+void lcd_refresh (void){
+	lcd_clear();
+	lcd_send_string(lcd_buffer);
+}
+
+void lcd_change_text (char *str){
+	strcpy(lcd_buffer, str);
+	lcd_refresh();
 }
