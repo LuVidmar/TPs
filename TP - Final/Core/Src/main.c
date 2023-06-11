@@ -44,17 +44,14 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM4_Init();
   lcd_init();
+  
+  /* Show end of init */
+  lcd_send_string("Init done!");
+  HAL_UART_Transmit_IT(&huart1, "\n\rInit done!\n\r", 14);
 
-  lcd_send_string("Hello World!");
+  HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1); // Start recieving data from UART1
   while (1)
   {
-    // Recieve data from UART
-    HAL_UART_Receive_IT(&huart1, (uint8_t *)rx_buffer, 1);
-    // Show data on UART
-    HAL_UART_Transmit(&huart1, (uint8_t *)rx_buffer, 1, 100);
-    // Send data to LCD
-    lcd_send_string(rx_buffer);
-    lcd_clear();
   }
 
 }

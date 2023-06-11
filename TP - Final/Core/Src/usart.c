@@ -18,8 +18,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
 
-char rx_buffer[100] = {0};
-bool printed = false;
+char UART1_rxBuffer[2] = {0};
 UART_HandleTypeDef huart1;
 
 /* USART1 init function */
@@ -87,4 +86,12 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     /* USART1 interrupt Deinit */
     HAL_NVIC_DisableIRQ(USART1_IRQn);
   }
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  //Show the received data on the serial monitor
+  HAL_UART_Transmit_IT(&huart1, UART1_rxBuffer, 1);
+  //Receive next data
+  HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1);
 }
