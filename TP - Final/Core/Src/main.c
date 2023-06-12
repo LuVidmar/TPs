@@ -48,15 +48,15 @@ int main(void)
   lcd_init();
   lcd_clear();
 
+  /* Show end of init */
+  lcd_change_text("Initializing...");
+  usart_print("\n\rInitializing...\n\r");
+
   // Initialize FSM (this must be the last one to init)
   fsm_init();
 
   /* Start timers */
   HAL_TIM_Base_Start_IT(&htim1);
-  
-  /* Show end of init */
-  lcd_change_text("Initializing...");
-  usart_print("\n\rInitializing...\n\r");
   
   while (1)
   {

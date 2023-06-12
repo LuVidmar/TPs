@@ -364,7 +364,7 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
   static uint32_t timeLED;
-  timeLED++;;
+  timeLED++;
 
   /* TIM1 */ 
   if (htim->Instance == TIM1){
@@ -376,7 +376,5 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
     }
 
   }
-
-  
 
 }

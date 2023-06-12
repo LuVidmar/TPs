@@ -19,7 +19,7 @@
 #include "usart.h"
 
 char UART1_rxBuffer[2] = {0};
-char data[16] = {0};
+char data[50] = {0};
 UART_HandleTypeDef huart1;
 
 /* USART1 init function */
