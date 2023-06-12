@@ -34,10 +34,11 @@ extern char data[16]; //last recieved data from UART1
 extern UART_HandleTypeDef huart1; //UART1 handle
 
 void MX_USART1_UART_Init(void);
+void usart_print(char*); //print text to UART1
+void usart_clear(void); //clear UART1 buffer and terminal
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* __USART_H__ */
-

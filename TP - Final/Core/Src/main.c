@@ -32,6 +32,8 @@ int main(void)
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
+  HAL_Delay(5000); //let debugger catch up
+
   /* Configure the system clock */
   SystemClock_Config();
 
@@ -44,17 +46,21 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM4_Init();
   lcd_init();
+  lcd_clear();
+
+  // Initialize FSM (this must be the last one to init)
+  fsm_init();
 
   /* Start timers */
   HAL_TIM_Base_Start_IT(&htim1);
   
   /* Show end of init */
-  lcd_change_text("Test");
-  HAL_UART_Transmit_IT(&huart1, "\n\rInit done!\n\r", 14);
-
-  HAL_UART_Receive_IT(&huart1, (uint8_t*)&UART1_rxBuffer, 1); // Start recieving data from UART1
+  lcd_change_text("Initializing...");
+  usart_print("\n\rInitializing...\n\r");
+  
   while (1)
   {
+    fsm();
   }
 
 }

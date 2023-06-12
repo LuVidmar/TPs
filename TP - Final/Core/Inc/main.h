@@ -33,6 +33,7 @@ extern "C" {
 #include "usart.h"
 #include "gpio.h"
 #include "lcd.h"
+#include "fsm.h"
 
 /* Std Libs */
 #include <stdint.h>
