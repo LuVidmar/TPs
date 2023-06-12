@@ -28,3 +28,7 @@ void lcd_change_text (char*);
 void lcd_write_in_second_line(void);
 // Write in first line
 void lcd_write_in_first_line(void);
+// Move cursor left
+void lcd_move_cursor_left(void);
+// Delete last char
+void lcd_del_last_char(void);

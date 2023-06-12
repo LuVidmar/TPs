@@ -83,3 +83,13 @@ void lcd_write_in_second_line(void){
 void lcd_write_in_first_line(void){
 	lcd_send_cmd(0x02);
 }
+
+void lcd_move_cursor_left(void){
+	lcd_send_cmd(0x10);
+}
+
+void lcd_del_last_char(void){
+	lcd_move_cursor_left();
+	lcd_send_data(' ');
+	lcd_move_cursor_left();
+}

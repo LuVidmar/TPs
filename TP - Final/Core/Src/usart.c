@@ -105,6 +105,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       state = STATE_PROCESS;
       return; //Don't receive next data
     }
+    else if (UART1_rxBuffer[0] == 127){ //Backspace
+      //Remove last character from data array
+      data[strlen(data)-1] = '\0';
+      //Remove last character from LCD
+      lcd_del_last_char();
+    }
     else{
       //Show the received data on the serial monitor
       usart_print(UART1_rxBuffer);
@@ -145,6 +151,8 @@ bool valid_char(char c){
   else if (c == '\r'){
     return true;
   }
+  else if (c == 127) //Backspace
+    return true;
   else{
     return false;
   }
