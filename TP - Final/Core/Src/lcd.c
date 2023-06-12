@@ -76,10 +76,10 @@ void lcd_change_text (char *str){
 	lcd_refresh();
 }
 
-void write_in_second_line(void){
+void lcd_write_in_second_line(void){
 	lcd_send_cmd(0xC1);
 }
 
-void write_in_first_line(void){
+void lcd_write_in_first_line(void){
 	lcd_send_cmd(0x02);
 }

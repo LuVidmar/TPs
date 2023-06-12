@@ -93,19 +93,25 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   if (state == STATE_INPUT){ //Check if we are supposed to input
 
-    //Show the received data on the serial monitor
-    usart_print(UART1_rxBuffer);
-    //Copy received data to data array
-    strcat(data, UART1_rxBuffer);
+    if (!valid_char(UART1_rxBuffer[0])){ // invalid char, ignore it
+      //Receive next data
+      HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1);
+      return;
+    }
 
     //Check if data is complete
     if (UART1_rxBuffer[0] == '\r'){
       //Change state to STATE_OUTPUT
       state = STATE_PROCESS;
+      return; //Don't receive next data
     }
     else{
+      //Show the received data on the serial monitor
+      usart_print(UART1_rxBuffer);
       //Also show it on the LCD
       lcd_send_data(UART1_rxBuffer[0]);
+      //Copy received data to data array
+      strcat(data, UART1_rxBuffer);
     }
 
   }
@@ -125,5 +131,24 @@ void usart_clear(void){
   memset(data, 0, sizeof(data));
   for(int i=0; i<10; i++) {
     usart_print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+  }
+}
+
+bool valid_char(char c){
+  //Check if the character is valid
+  if (c >= '1' && c <= '8'){
+    return true;
+  }
+  else if (c >= 'a' && c <= 'h'){
+    return true;
+  }
+  else if (c >= 'A' && c <= 'H'){
+    return true;
+  }
+  else if (c == '\r'){
+    return true;
+  }
+  else{
+    return false;
   }
 }

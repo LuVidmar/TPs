@@ -33,8 +33,10 @@ void fsm_init(void){
 void state_input(void) {
     // Detect new state
     if(old_state != state) {
-        lcd_change_text("Please input command");
-        usart_print("Please input command\n\r");
+        lcd_change_text("INPUT:");
+        usart_print("\n\rPlease input command\n\r");
+        //Write input in second line in lcd
+        lcd_write_in_second_line();
         // Trigger input mechanism
         HAL_UART_Receive_IT(&huart1, (uint8_t*)&UART1_rxBuffer, 1); // Start recieving data from UART1
     }
@@ -45,8 +47,8 @@ void state_input(void) {
 void state_process(void) {
     // Detect new state
     if(old_state != state) {
-        lcd_change_text("Processing input");
-        usart_print("Processing input\n\r");
+        lcd_change_text("Processing");
+        usart_print("\n\rProcessing input\n\r");
     }
     
     old_state = state;
@@ -54,7 +56,7 @@ void state_process(void) {
 
 void state_output(void) {
     if(old_state != state) {
-        lcd_change_text("Output");
+        lcd_change_text("Output:");
         usart_print("Output\n\r");
     }
 

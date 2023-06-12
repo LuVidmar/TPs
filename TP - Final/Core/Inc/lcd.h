@@ -24,3 +24,7 @@ void lcd_clear (void);
 void lcd_refresh (void);
 // Change value to display
 void lcd_change_text (char*);
+// Write in second line
+void lcd_write_in_second_line(void);
+// Write in first line
+void lcd_write_in_first_line(void);
