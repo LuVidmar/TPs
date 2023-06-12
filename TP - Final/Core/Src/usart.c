@@ -18,7 +18,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
 
-char UART1_rxBuffer = '\0';
+char UART1_rxBuffer[2] = {0};
 char data[16] = {0};
 UART_HandleTypeDef huart1;
 
@@ -94,29 +94,30 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   if (state == STATE_INPUT){ //Check if we are supposed to input
 
     //Show the received data on the serial monitor
-    usart_print(&UART1_rxBuffer);
+    usart_print(UART1_rxBuffer);
     //Copy received data to data array
-    strcat(data, &UART1_rxBuffer);
+    strcat(data, UART1_rxBuffer);
 
     //Check if data is complete
-    if (UART1_rxBuffer == '\n'){
+    if (UART1_rxBuffer[0] == '\r'){
       //Change state to STATE_OUTPUT
       state = STATE_PROCESS;
     }
     else{
       //Also show it on the LCD
-      lcd_change_text(data);
+      lcd_send_data(UART1_rxBuffer[0]);
     }
 
   }
 
   //Receive next data
-  HAL_UART_Receive_IT(&huart1, (uint8_t*)&UART1_rxBuffer, 1);
+  HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1);
 }
 
 void usart_print(char* text){
   //Print text once
-  HAL_UART_Transmit_IT(&huart1, text, strlen(text));
+  uint8_t len = strlen(text);
+  HAL_UART_Transmit(&huart1, (uint8_t*)text, len, 1000);
 }
 
 void usart_clear(void){

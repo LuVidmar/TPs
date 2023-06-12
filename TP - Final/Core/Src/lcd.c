@@ -62,7 +62,7 @@ void lcd_init (void)
 void lcd_clear (void)
 {
 	lcd_send_cmd(0x01);
-	HAL_Delay(1);
+	HAL_Delay(2);
 }
 
 void lcd_refresh (void){
@@ -71,6 +71,7 @@ void lcd_refresh (void){
 }
 
 void lcd_change_text (char *str){
+	memset(lcd_buffer, 0, sizeof(lcd_buffer));
 	strcpy(lcd_buffer, str);
 	lcd_refresh();
 }
