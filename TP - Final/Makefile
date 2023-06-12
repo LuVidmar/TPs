@@ -43,6 +43,7 @@ Core/Src/tim.c \
 Core/Src/usart.c \
 Core/Src/lcd.c \
 Core/Src/fsm.c \
+Core/Src/board.c \
 Core/Src/stm32f1xx_it.c \
 Core/Src/stm32f1xx_hal_msp.c \
 Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio_ex.c \
