@@ -34,6 +34,7 @@ extern "C" {
 #include "gpio.h"
 #include "lcd.h"
 #include "fsm.h"
+#include "board.h"
 
 /* Std Libs */
 #include <stdint.h>

@@ -50,8 +50,16 @@ void state_process(void) {
         lcd_change_text("Processing");
         usart_print("\n\rProcessing input\n\r");
     }
-    
-    old_state = state;
+
+    HAL_Delay(1000); // Wait 1 second
+    if (board_move(data)){
+        old_state = state;
+        state = STATE_OUTPUT;
+    }
+    else{
+        old_state = state;
+        state = STATE_INPUT;
+    }
 }
 
 void state_output(void) {

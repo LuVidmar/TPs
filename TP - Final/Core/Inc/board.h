@@ -3,23 +3,28 @@
 
 /* ------- Includes ------- */
 #include "main.h"
+#include <stdbool.h>
+#include <stdio.h>
 
 /* ------- Constants ------- */
 // Chess board
-#define BOARD_SIDE 8 // in squares
+#define BOARD_SIDES 8 // in squares
 #define SQUARE_SIZE 50 // in milimeters
 
 /* ------- Variables ------- */
 typedef struct {
     int x;
     int y;
-} distance_t;
+} point_t;
+
+extern point_t last_point; // in squares
 
 /* ------- Functions ------- */
-
-//Given a movement string, returns the distance to move in both axis in milimeters
-distance_t parse_movement(char*);
-//Given a distance, returns if it valid or not
-bool is_valid_distance(distance_t);
+// Handles a movement, returns if valid or not
+bool board_move(char*);
+// Given a distance, returns if it valid or not
+bool board_parse_movement(char*);
+// Given a point, moves the arm from last point to that point
+void board_move_to(point_t point);
 
 #endif // BOARD_H

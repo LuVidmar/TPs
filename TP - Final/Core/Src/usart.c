@@ -139,9 +139,6 @@ bool valid_char(char c){
   if (c >= '1' && c <= '8'){
     return true;
   }
-  else if (c >= 'a' && c <= 'h'){
-    return true;
-  }
   else if (c >= 'A' && c <= 'H'){
     return true;
   }
