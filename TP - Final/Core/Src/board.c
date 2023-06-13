@@ -27,7 +27,7 @@ bool board_move(char* movement){
     if (!board_parse_movement(movement)) {
         usart_print("\n\rInvalid movement!\n\r");
         lcd_change_text("Invalid mov!");
-        return;
+        return false;
     }
 
     /* Extract 2 points */
@@ -46,6 +46,8 @@ bool board_move(char* movement){
     //Move from latest point to ending
     board_move_to(ending_point);
     last_point = ending_point;
+
+    return true;
 }
 
 void board_move_to(point_t point){

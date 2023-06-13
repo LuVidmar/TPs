@@ -110,6 +110,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       data[strlen(data)-1] = '\0';
       //Remove last character from LCD
       lcd_del_last_char();
+      //Remove last character from serial monitor
+      usart_print("\b \b");
     }
     else{
       //Show the received data on the serial monitor
