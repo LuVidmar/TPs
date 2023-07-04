@@ -29,6 +29,10 @@ Para esta primera entrega, se debera lograr ingresar comandos (que no tendran va
 
 ![Diagrama funcional](Documentacion/diagrama-funcional.jpg)
 
+### Vista de Breadboard
+
+![Breadboard](Documentacion/breadboard.svg)
+
 ### Entrega 2
 
 En la segunda entrega se debera poder validar movimientos y llevar una logica de juego.
