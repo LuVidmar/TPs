@@ -1,10 +1,14 @@
 #include "fsm.h"
 
 /* ------- Constants --------*/
+enum SUBSTATES { S_IDLE, MOVING_P1_X, MOVING_P1_Y, MOVING_P2_X, MOVING_P2_Y, END };
 uint8_t state = STATE_INPUT;
 uint8_t old_state = STATE_INIT;
+uint8_t substate = S_IDLE;
+uint8_t next_state = MOVING_P1_X;
 
 /* ------- Functions --------*/
+void reset_vars(void);
 
 // FSM handler
 void fsm(void) {
@@ -70,5 +74,49 @@ void state_output(void) {
         usart_print("\n\rMoving...\n\r");
     }
 
+    switch (substate) {
+    case S_IDLE:
+        if(!motorBUSY){
+            substate = next_state;
+        }
+        break;
+    case MOVING_P1_X:
+        board_move_to_x(starting_point);
+        next_state = MOVING_P1_Y;
+        substate = S_IDLE;
+        break;
+    case MOVING_P1_Y:
+        board_move_to_y(starting_point);
+        next_state = MOVING_P2_X;
+        substate = S_IDLE;
+        break;
+    case MOVING_P2_X:
+        last_point = starting_point;
+        board_move_to_x(ending_point);
+        next_state = MOVING_P2_Y;
+        substate = S_IDLE;
+        break;
+    case MOVING_P2_Y:
+        board_move_to_y(ending_point);
+        next_state = END;
+        substate = S_IDLE;
+        break;
+    case END:
+        last_point = ending_point;
+        reset_vars();
+        return;
+    default:
+        break;
+    }
+
     old_state = state;
+}
+
+void reset_vars(void){
+    state = STATE_INPUT;
+    old_state = STATE_INIT;
+    substate = S_IDLE;
+    next_state = MOVING_P1_X;
+    memset(UART1_rxBuffer,0,2);
+    memset(data,0,50);
 }

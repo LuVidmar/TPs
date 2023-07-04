@@ -57,9 +57,15 @@ int main(void)
 
   /* Start timers */
   HAL_TIM_Base_Start_IT(&htim1);
-  
+  HAL_TIM_Base_Start_IT(&htim3);
+
+  /* Move to origin */
+  volverOrigen();
+
   while (1)
   {
+    DebounceEntradas();
+    stepperWatchDog();
     fsm();
   }
 

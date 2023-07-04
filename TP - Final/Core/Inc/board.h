@@ -18,6 +18,7 @@ typedef struct {
 } point_t;
 
 extern point_t last_point; // in squares
+extern point_t starting_point, ending_point;
 
 /* ------- Functions ------- */
 // Handles a movement, returns if valid or not
@@ -25,6 +26,7 @@ bool board_move(char*);
 // Given a distance, returns if it valid or not
 bool board_parse_movement(char*);
 // Given a point, moves the arm from last point to that point
-void board_move_to(point_t point);
+void board_move_to_x(point_t point);
+void board_move_to_y(point_t point);
 
 #endif // BOARD_H

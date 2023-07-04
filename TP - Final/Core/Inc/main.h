@@ -35,6 +35,8 @@ extern "C" {
 #include "lcd.h"
 #include "fsm.h"
 #include "board.h"
+#include "entradas.h"
+#include "STEPPER_MOTOR.h"
 
 /* Std Libs */
 #include <stdint.h>

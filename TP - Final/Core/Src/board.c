@@ -1,6 +1,7 @@
 #include "board.h"
 
 point_t last_point = {0, 0};
+point_t starting_point, ending_point;
 
 bool board_parse_movement(char* movement){
     /* Check format */
@@ -31,38 +32,25 @@ bool board_move(char* movement){
     }
 
     /* Extract 2 points */
-    point_t starting_point, ending_point;
     starting_point.x = movement[0] - 'A'; // Convert A-H to 0-7
     starting_point.y = movement[1] - '1'; // Convert 1-8 to 0-7
     ending_point.x = movement[2] - 'A'; // Convert A-H to 0-7
     ending_point.y = movement[3] - '1'; // Convert 1-8 to 0-7
 
-    //Move from latest point to starting
-    board_move_to(starting_point);
-    last_point = starting_point;
-
-    /* HANDLE Z MOVEMENT*/
-
-    //Move from latest point to ending
-    board_move_to(ending_point);
-    last_point = ending_point;
-
     return true;
 }
 
-void board_move_to(point_t point){
-    // Move from latest point to point
+void board_move_to_x(point_t point){
+    // Move from latest point to new point
     int dx = point.x - last_point.x;
-    int dy = point.y - last_point.y;
 
     // Distance in mm
     dx *= SQUARE_SIZE;
-    dy *= SQUARE_SIZE;
 
     // Inform user
     usart_print("\n\rMoving: ");
     char coordinates[16] = {0};
-    sprintf(coordinates, "x: %d, y: %d mm", dx, dy);
+    sprintf(coordinates, "x: %d mm", dx);
     usart_print(coordinates);
     lcd_clear();
     lcd_change_text("MOVING");
@@ -70,6 +58,26 @@ void board_move_to(point_t point){
     lcd_change_text(coordinates);
 
     // Move
-    //moverXmm(dx);
-    //moverYmm(dy);
+    moverXmm(dx);
+}
+
+void board_move_to_y(point_t point){
+    // Move from latest point to new point
+    int dy = point.y - last_point.y;
+
+    // Distance in mm
+    dy *= SQUARE_SIZE;
+
+    // Inform user
+    usart_print("\n\rMoving: ");
+    char coordinates[16] = {0};
+    sprintf(coordinates, "y: %d mm", dy);
+    usart_print(coordinates);
+    lcd_clear();
+    lcd_change_text("MOVING");
+    lcd_write_in_second_line();
+    lcd_change_text(coordinates);
+
+    // Move
+    moverYmm(dy);
 }
