@@ -55,7 +55,7 @@ El mismo consiste en una bobina de cobre esmaltado alrededor de un tornillo (tam
 
 Debido al alto consumo del electroiman (12V - 2A). Se creo un circuito externo para poder enviar la señal de 3.3V 20mA desde el micro al Electroiman, alimentado externamente con un a fuente step-down de 12V, con la corriente limitada por HW a 2A, a través de un rele en cascada con un transistor, para no sobrecargar la pata del micro.
 
-![[electroiman.png]]
+![electroiman](./Documentacion/electroiman.png)
 
 ### ***LCD + I2C***
 - LCD1602A
@@ -88,17 +88,17 @@ Componente necesario para interacción con el usuario a través de la terminal p
 ### ***Circuito***
 Para comenzar lo montamos todo sobre una breadboard.
 
-![[breadboard.png]]
+![breadboard](./Documentacion/breadboard.png)
 
 Las primeras entregas fueron enteramente en la *breadboard*, lo cual tuvo complicaciones como la manipulacion de altas corrientes en el electroiman y las tensiones superiores en la parte de los motores, llevando a quemar algunas pistas de la misma.
 
 Debido a esto fue que se tomo la decision de pasar a un sistema mas fiable montado en una *perfboard*. Para esto, se migro el esquematico mostrado a sue equivalente soldado en una placa troquelada de la siguiente manera:
 
-![[perfboard.png]]
+![perfboard](./Documentacion/perfboard.png)
 
 Finalmente, y siguiendo este esquematico, soldamos los componentes.
 
-![[image1.jpeg]]
+![image1](./Documentacion/Fotos/image1.jpeg)
 
 ## Software
 
