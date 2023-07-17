@@ -9,6 +9,9 @@ print("STM32 is ready.\n Game is starting, have fun!\n")
 while chess_board.game_ended() == False: # While the game is not over
     # Get move from user
     move = input("Enter your move: ")
+    # Check if user wants to exit
+    if move in ["exit", "quit", "stop", "end", "q"]:
+        break
     # Check if move is valid
     try:
         if chess_board.is_valid_move(move):
@@ -18,9 +21,7 @@ while chess_board.game_ended() == False: # While the game is not over
             uart.send_move(move_coords)
             print("Move sent to STM32: " + move_coords)
             # Print board
-            print("\n----------------")
-            print(chess_board.get_board())
-            print("----------------\n")
+            chess_board.print_board()
         else:
             print("Invalid move, try again.")
             continue

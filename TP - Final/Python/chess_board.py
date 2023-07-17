@@ -11,8 +11,10 @@ def move(move: str) -> str: # Returns the move in UCI format
     bmove = board.push_san(move)
     return bmove.uci()
 
-def get_board():
-    return board
-
 def game_ended() -> bool:
     return board.is_game_over()
+
+def print_board():
+    print("\n----------------")
+    print(board.unicode())
+    print("----------------\n")
