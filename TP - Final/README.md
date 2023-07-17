@@ -19,13 +19,44 @@ El objetivo de este trabajo es lograr la implementacion de un sistema de juego c
 El microprocesador utilizado durante toda la cursada, ideal para aplicaciones de control de este estilo.
 
 ### ***Motores, steppers, finales de carrera***
-- Pololu A4988
-- #todo insertar modelo de motores
-#todo insertar explicacion
+- x3 Pololu DRV8825
+- x3 Leadshine Stepping Motor, bipolar, 1.8◦/stepp, 1,5A
+- x3 Finales de carrera
 
-### ***Electroiman + XXXXX***
-#todo modulo limitador de corriente y explicacion, optoacoplador, etc 
-Para el electroiman, se analizaron distintas opciones pero se termino optando por hacer uno a traves de un bobinado simple y la utilizacion de un pequeno modulo para limitar la corriente y aislar el sistema de potencia respecto del circuito de control.
+Para el movimiento de nuestro robot se decidio el uso de motores paso a paso, debido a su presicion, velocidad y confiabilidad. Los mismos se controlan mediante un driver que le proporciona la corriente para excitar las bobinas y posee 3 conexiones con la placa: STEP, DIR. La primera recibe los pulsos para activar las bobinas (donde cada pulso equivaldra a 1 step), el segundo sera para diferenciar el sentido de giro.
+Como se tienen ejes lineales y el motor tiene un movimiento radial, habra que convertir las vueltas del motor en movimiento lineal. Para ello se utilizo la siguiente formula de conversion: 
+
+El motor tiene 360 grados, y cada paso del motor (step) equivale a 1.8◦. Es decir que para una vuelta completa de motor se tienen que ejecutar 200 stepps. Ademas el movimiento se logra con un tornillo acme de 4 hilos, con un avance de 8mm por vuelta. Entonces queda:
+
+1 vuelta de tornillo    -> 8mm de avance
+
+1 vuelta de tornillo -> 200 pasos
+
+-> 200 pasos/8mm = 25 pasos/mm
+
+Teniendo en cuenta esto, se creo una funcion que recibe como parametro la direccion y cantidad de mm y esta le envia al motor hacia donde cuanto debera moverse.
+
+Lo ultimo que se hizo, es mediante los finales de carrera es setear las coordenadas 0,0,0 de la maquina, para tener nocion del espacio.
+Los finales de carrera al ser pushbutton fisicos, al presionar el boton, se puenden obtener falsos positivos, por ruido o por el transitorio de 0 a 1. Por eso se debio crear una rutina de lectura de entradas con debounce. Donde se espera que la lectura de igual 4 veces consecutivas para contarlo como un cambio en el estado del boton.
+
+
+### ***Electroiman + Alimentacion externa apropiada***
+
+- Electroiman
+  
+- Modulo Rele con transistor y diodo
+
+- Fuente step-down XL4015, tension regulabre 1.35V-48V, Corriente regulable 0A-5A
+
+Para levantar las piezas se decidio utilizar un electroiman.
+
+Se analizaron distintas opciones pero se termino optando por hacer uno a traves de un bobinado simple y la utilizacion de un pequeño modulo para limitar la corriente y aislar el sistema de potencia respecto del circuito de control.
+
+El mismo consiste en una bobina de cobre esmaltado alrededor de un tornillo ( tambien asilado). Al darle corriente a la bobina, debido al efecto del flujo de campo magnetico a travez de una espira, mediante Fahraday-Lenz, se magnetizas el tornillo para poder levantar la pieza.
+
+Debido al alto consumo del Electroiman (12V - 2A). Se creo un circuito externo para poder enviar la señal de 3.3V 20mA desde el micro al Electroiman, alimentado externamente con un a fuente step-down de 12V, con la corriente limitada por HW a 2A, a travez de un rele en cascada con un transistor, para no sobrecargar la pata del micro.
+
+#todo imagen
 
 ### ***LCD + I2C***
 - LCD1602A
@@ -74,11 +105,24 @@ Para comenzar con la implementacion primero se debe dividir el proceso en sus mo
 - Modulo UART -> Las interacciones con el usuario y con la aplicacion de Python se realizara a traves de este modulo.
 - Modulo Motores -> Como lo indica su nombre, controlara los motores, finales de carrera, electroiman, etc.
 
+## Desafios
+
+Como desafio principal, mas alla de hacer funcionar lo propuesto, nos propusimos a hacer un programa que sea 100% NO-BLOQUEANTE. Esto a la primera puede sonar muy bueno, logico y facil. A la hora de implementarlo surgen muchos problemas que en primera instancia estaban ocultos. Ya que en la solucion esta el problema. Como hacer que todo ande a la vez, que no sea bloqueante, pero que a su vez, no se pisen los distintos modulos. Ya que por ejemplo. Si un motor esta andando, no hay un delay(1000), esperando a que se termine de mover. 
+Esto tambien dificulta el debbugeo ya que muchas cosas corren con interrupciones o durante varios ciclos de clock.
+
+Pero con planeamiento previo y debugeo logramos resultdos muy positivos. 
+
+Lo que nos permite haber hecho esto, es que la escalabilidad del proyecto es mucho mas facil, ya que se podria embeber en un RTOS o agregas otras funcionalidades que funciones en "paralelo", sin perjudirar el correcto funcionameieneto de lo que ya tenemos.
+
+Otro desafio que tuvimos (un poco en sintonia con el anterior) fue poder diseccionar el proyecto y poder abarcarlo de a partes mas pequeñas sin perder de vista la funcionalidad macro. Al ser un proyecto ambisioso a la hora de querer abordar los pequeños modulos, se podia perder un poco la vision general. Con que me refiero a esto. A veces nos paso que en el afan de querer hacer andar una parte, por ejemplo el motor, al tenerlo andando por su cuenta, no siempre se acoplaba bien a la primera y habia que hacermodificaciones y darle una vuelta de rosca para que funcione todo en sintonia.
+
 ## Conclusion
-#todo
+
 
 ## Proximos pasos
-
+- Conexion de los pines ENABLE de los drives para poder apagar los motores en runtime
+- Antes de comer una ficha, deberia mover la pieza a comer, fuera del tablero. Y luego mover la pieza seleccionada.
+  
 ### ***Creacion de librerias propias***
 #todo 
 ### ***Implementacion de interfaz grafica y juego a traves de internet***
