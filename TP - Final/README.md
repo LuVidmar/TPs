@@ -40,9 +40,21 @@ Lo ultimo que se hizo, es mediante los finales de carrera es setear las coordena
 Los finales de carrera al ser pushbutton fisicos, al presionar el boton, se puenden obtener falsos positivos, por ruido o por el transitorio de 0 a 1. Por eso se debio crear una rutina de lectura de entradas con debounce. Donde se espera que la lectura de igual 4 veces consecutivas para contarlo como un cambio en el estado del boton.
 
 
-### ***Electroiman + XXXXX***
-#todo modulo limitador de corriente y explicacion, optoacoplador, etc 
-Para el electroiman, se analizaron distintas opciones pero se termino optando por hacer uno a traves de un bobinado simple y la utilizacion de un pequeno modulo para limitar la corriente y aislar el sistema de potencia respecto del circuito de control.
+### ***Electroiman + Alimentacion externa apropiada***
+
+- Electroiman
+  
+- Modulo Rele con transistor y diodo
+
+- Fuente step-down XL4015, tension regulabre 1.35V-48V, Corriente regulable 0A-5A
+
+Para levantar las piezas se decidio utilizar un electroiman.
+
+Se analizaron distintas opciones pero se termino optando por hacer uno a traves de un bobinado simple y la utilizacion de un pequeño modulo para limitar la corriente y aislar el sistema de potencia respecto del circuito de control.
+
+El mismo consiste en una bobina de cobre esmaltado alrededor de un tornillo ( tambien asilado). Al darle corriente a la bobina, debido al efecto del flujo de campo magnetico a travez de una espira, mediante Fahraday-Lenz, se magnetizas el tornillo para poder levantar la pieza.
+
+Debido al alto consumo del Electroiman (12V - 2A). Se creo un circuito externo para poder enviar la señal de 3.3V 20mA desde el micro al Electroiman, alimentado externamente con un a fuente step-down de 12V, con la corriente limitada por HW a 2A, a travez de un rele en cascada con un transistor, para no sobrecargar la pata del micro.
 
 #todo imagen
 
