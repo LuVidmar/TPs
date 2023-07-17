@@ -127,11 +127,11 @@ void state_output(void) {
         break;
     case MOVING_P1_Z_DOWN: // Move down
         board_move_to_z(Z_DOWN);
-        electromagnet_toggle(); // Taking the piece
         next_state = MOVING_P1_Z_UP;
         substate = S_IDLE;
         break;
     case MOVING_P1_Z_UP:
+        electromagnet_toggle(); // Taking the piece
         board_move_to_z(Z_UP);
         next_state = MOVING_P2_X;
         substate = S_IDLE;
@@ -153,8 +153,8 @@ void state_output(void) {
         substate = S_IDLE;
         break;
     case MOVING_P2_Z_UP:
-        board_move_to_z(Z_UP);
         electromagnet_toggle(); // Placing the piece
+        board_move_to_z(Z_UP);
         next_state = END;
         substate = S_IDLE;
         break;
@@ -179,10 +179,12 @@ void reset_vars(void){
     memset(UART1_rxBuffer,0,2);
     memset(data,0,50);
     memset(data_python,0,50);
+    lcd_init();
     // Let python know we are ready for input
     if (PYTHON_INPUT){
         waiting_for_input = true;
         usart_print("STM-NextMove\n");
     }
+    HAL_Delay(1000); // Wait 1 second
     
 }
