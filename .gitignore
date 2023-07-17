@@ -5,3 +5,10 @@
 /**/.mxproject
 /**/.mxmetadata
 /**/mx.scratch
+
+#Obsidian files
+.obsidian
+
+# Python debugging
+/**/__pycache__
+tempCodeRunnerFile.py

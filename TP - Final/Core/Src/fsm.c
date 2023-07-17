@@ -6,6 +6,7 @@ uint8_t state = STATE_INPUT;
 uint8_t old_state = STATE_INIT;
 uint8_t substate = S_IDLE;
 uint8_t next_state = MOVING_P1_X;
+bool waiting_for_input = false;
 
 /* ------- Functions --------*/
 void reset_vars(void);
@@ -14,7 +15,10 @@ void reset_vars(void);
 void fsm(void) {
     switch (state) {
         case STATE_INPUT:
-            state_input();
+            if(PYTHON_INPUT)
+                state_python();
+            else
+                state_input();
             break;
         case STATE_PROCESS:
             state_process();
@@ -32,6 +36,33 @@ void fsm_init(void){
     old_state = STATE_INIT;
     usart_clear();
     usart_print("FSM initialized\n\r");
+}
+
+void state_python(void) {
+
+    // Detect new state
+    if(old_state != state) {
+        lcd_change_text("PYTHON");
+        usart_print("\n\rPython mode\n\r");
+        //Write input in second line in lcd
+        lcd_write_in_second_line();
+        // Trigger input mechanism
+        HAL_UART_Receive_IT(&huart1, (uint8_t*)&UART1_rxBuffer, 1); // Start recieving data from UART1
+        waiting_for_input = true;
+    }
+
+    // If waiting for python, let it know
+    if(waiting_for_input) 
+        usart_print("STM-Ready.");
+    else {
+        // Copy python input first 4 chars to data
+        strncpy(data, data_python, 4);
+        state = STATE_PROCESS; // Change state
+        lcd_change_text(data_python);
+        return;
+    }
+
+    old_state = state;
 }
 
 void state_input(void) {
@@ -56,12 +87,11 @@ void state_process(void) {
     }
 
     HAL_Delay(1000); // Wait 1 second (for dramatic effect)
-    if (board_move(data)){
-        old_state = state;
+    old_state = state;
+    if (board_move(data)){ // Check if data is valid
         state = STATE_OUTPUT;
     }
-    else{
-        old_state = state;
+    else{ // Data is invalid
         state = STATE_INPUT;
         // Clear data
         memset(data, 0, sizeof(data));
@@ -103,6 +133,7 @@ void state_output(void) {
         break;
     case END:
         last_point = ending_point;
+        HAL_Delay(1000); // To show last coordinate
         reset_vars();
         return;
     default:
@@ -113,10 +144,18 @@ void state_output(void) {
 }
 
 void reset_vars(void){
+    // Reset variables
     state = STATE_INPUT;
     old_state = STATE_INIT;
     substate = S_IDLE;
     next_state = MOVING_P1_X;
     memset(UART1_rxBuffer,0,2);
     memset(data,0,50);
+    memset(data_python,0,50);
+    // Let python know we are ready for input
+    if (PYTHON_INPUT){
+        waiting_for_input = true;
+        usart_print("STM-NextMove.");
+    }
+    
 }

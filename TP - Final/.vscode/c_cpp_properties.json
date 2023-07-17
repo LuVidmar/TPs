@@ -9,8 +9,8 @@
                 "${workspaceRoot}/Drivers/CMSIS/Include",
                 "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
                 "/usr/arm-none-eabi/include",
-                "/lib/gcc/arm-none-eabi/12.2.0/include",
-                "/lib/gcc/arm-none-eabi/12.2.0/include-fixed",
+                "/lib/gcc/arm-none-eabi/10.3.1/include",
+                "/lib/gcc/arm-none-eabi/10.3.1/include-fixed",
                 "/usr/arm-none-eabi/include/machine",
                 "/usr/arm-none-eabi/include/newlib-nano",
                 "/usr/arm-none-eabi/include/sys"
@@ -30,8 +30,8 @@
                     "${workspaceRoot}/Drivers/CMSIS/Include",
                     "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
                     "/usr/arm-none-eabi/include",
-                    "/lib/gcc/arm-none-eabi/12.2.0/include",
-                    "/lib/gcc/arm-none-eabi/12.2.0/include-fixed"
+                    "/lib/gcc/arm-none-eabi/10.3.1/include",
+                    "/lib/gcc/arm-none-eabi/10.3.1/include-fixed"
                 ],
                 "limitSymbolsToIncludedHeaders": true
             },

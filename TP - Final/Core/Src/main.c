@@ -60,7 +60,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim3);
 
   /* Move to origin */
-  volverOrigen();
+  // volverOrigen();
 
   while (1)
   {

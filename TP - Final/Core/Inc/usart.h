@@ -31,6 +31,7 @@ extern "C" {
 
 /* ------- Variables ------- */
 extern char UART1_rxBuffer[2]; //buffer for recieving data from UART1
+extern char data_python[50]; //last recieved data from UART1 in python mode
 extern char data[50]; //last recieved data from UART1
 extern UART_HandleTypeDef huart1; //UART1 handle
 

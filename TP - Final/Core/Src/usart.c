@@ -20,6 +20,7 @@
 
 char UART1_rxBuffer[2] = {0};
 char data[50] = {0};
+char data_python[50] = {0};
 UART_HandleTypeDef huart1;
 
 /* USART1 init function */
@@ -91,7 +92,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-  if (state == STATE_INPUT){ //Check if we are supposed to input
+  if (state == STATE_INPUT && !PYTHON_INPUT){ //Check if we are supposed to input
 
     if (!valid_char(UART1_rxBuffer[0])){ // invalid char, ignore it
       //Receive next data
@@ -122,6 +123,18 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       strcat(data, UART1_rxBuffer);
     }
 
+  }
+  else if(state == STATE_INPUT && PYTHON_INPUT){ //Check if we are supposed to interact with python
+
+    waiting_for_input = false; //We are not waiting for input anymore
+    char c = UART1_rxBuffer[0];
+
+    // Push data to data_python
+    strcat(data_python, UART1_rxBuffer);
+    if (c == '.'){ //Check if data is complete
+      return; //Don't receive next data
+    }
+    
   }
 
   //Receive next data
