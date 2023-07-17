@@ -23,7 +23,7 @@ El microprocesador utilizado durante toda la cursada, ideal para aplicaciones de
 - x3 Leadshine Stepping Motor, bipolar, 1.8◦/stepp, 1,5A
 - x3 Finales de carrera
 
-Para el movimiento de nuestro robot se decidio el uso de motores paso a paso, debido a su presicion, velocidad y confiabilidad. Los mismos se controlan mediante un driver que le proporciona la corriente para excitar las bobinas y posee 3 conexiones con la placa: STEP, DIR, ENABLE. La primera recibe los pulsos para activar las bobinas (donde cada pulso equivaldra a 1 step), el segundo sera para diferenciar el sentido de giro y el tercero sera para habilitar o deshabilitar el motor.
+Para el movimiento de nuestro robot se decidio el uso de motores paso a paso, debido a su presicion, velocidad y confiabilidad. Los mismos se controlan mediante un driver que le proporciona la corriente para excitar las bobinas y posee 3 conexiones con la placa: STEP, DIR. La primera recibe los pulsos para activar las bobinas (donde cada pulso equivaldra a 1 step), el segundo sera para diferenciar el sentido de giro.
 Como se tienen ejes lineales y el motor tiene un movimiento radial, habra que convertir las vueltas del motor en movimiento lineal. Para ello se utilizo la siguiente formula de conversion: 
 
 El motor tiene 360 grados, y cada paso del motor (step) equivale a 1.8◦. Es decir que para una vuelta completa de motor se tienen que ejecutar 200 stepps. Ademas el movimiento se logra con un tornillo acme de 4 hilos, con un avance de 8mm por vuelta. Entonces queda:
@@ -120,7 +120,9 @@ Otro desafio que tuvimos (un poco en sintonia con el anterior) fue poder disecci
 
 
 ## Proximos pasos
-
+- Conexion de los pines ENABLE de los drives para poder apagar los motores en runtime
+- Antes de comer una ficha, deberia mover la pieza a comer, fuera del tablero. Y luego mover la pieza seleccionada.
+  
 ### ***Creacion de librerias propias***
 #todo 
 ### ***Implementacion de interfaz grafica y juego a traves de internet***
