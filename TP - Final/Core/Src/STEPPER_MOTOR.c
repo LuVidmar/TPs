@@ -110,9 +110,12 @@ void volverOrigen(void){
 
 void stepperWatchDog(){
 
-	static bool zeroX= false, zeroXdone = false;
-	static bool zeroY= false, zeroYdone = false;
-	static bool zeroZ= false, zeroZdone = false;
+	static bool zeroX= false;
+	static bool zeroXdone = false;
+	static bool zeroY= false;
+	static bool zeroYdone = false;
+	static bool zeroZ= false;
+	static bool zeroZdone = false;
 
 	zeroX= LeerEntrada(END_X);
 	zeroY= LeerEntrada(END_Y);
@@ -125,27 +128,23 @@ void stepperWatchDog(){
 			motorBUSY=true;
 			zeroXdone=true;
 		}
-		if(zeroY && !zeroYdone){
+		if(zeroY && !zeroYdone && zeroXdone){
 			Motor2=STOP;
 			moverMotor_mm(EJEZ, ARRIBA, MAXDIST_Z);
 			motorBUSY=true;
 			zeroYdone=true;
 		}
-		if(zeroZ && !zeroZdone){
+		if(zeroZ && !zeroZdone && zeroXdone && zeroYdone){
 			Motor3=STOP;
 			motorBUSY=true;
-			distFromCeroX=0;
-			distFromCeroY=0;
-			distFromCeroZ=0;
-			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 0);
 			zeroZdone=true;
 		}
 		if (zeroXdone && zeroYdone && zeroZdone){
 			rutinaOrigin=false;
-			zeroXdone=false;
-			zeroYdone=false;
-			zeroZdone=false;
 			motorBUSY=false;
+			distFromCeroX=0;
+			distFromCeroY=0;
+			distFromCeroZ=0;
 			lcd_change_text("Origin Done");
   			usart_print("\n\rMoved to origin succesfully.\n\r");
 		}

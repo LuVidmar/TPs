@@ -95,14 +95,18 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
       lcd_del_last_char();
       //Remove last character from serial monitor
       usart_print("\b \b");
+      //Receive next data
+      HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1);
     }
-    else{
+    else{ //Valid character
       //Show the received data on the serial monitor
       usart_print(UART1_rxBuffer);
       //Also show it on the LCD
       lcd_send_data(UART1_rxBuffer[0]);
       //Copy received data to data array
       strcat(data, UART1_rxBuffer);
+      //Receive next data
+      HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1);
     }
 
   }
@@ -110,17 +114,17 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
     waiting_for_input = false; //We are not waiting for input anymore
     char c = UART1_rxBuffer[0];
-
+  
     // Push data to data_python
     strcat(data_python, UART1_rxBuffer);
     if (c == '.'){ //Check if data is complete
       return; //Don't receive next data
     }
+    //Receive next data
+    HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1);
     
   }
 
-  //Receive next data
-  HAL_UART_Receive_IT(&huart1, (uint8_t*)UART1_rxBuffer, 1);
 }
 
 void usart_print(char* text){
