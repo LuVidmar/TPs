@@ -1,14 +1,3 @@
-/*
- * STEPPER_MOTOR.H
- *
- *  Created on: Jun 11, 2023
- *      Author: Joaquin
- *
- *  Consideraciones:
- *  Este driver usa el tim3 para generar los pasos de los motores
- *  HAL_TIM_PeriodElapsedCallback()
- */
-
 #ifndef ECU_INC_STEPPER_MOTOR_H_
 #define ECU_INC_STEPPER_MOTOR_H_
 
@@ -76,7 +65,7 @@ void moverMotor_tiempo(uint8_t*, uint32_t);
 void moverMotor_step(uint16_t, bool, uint32_t);
 void velocidadMotor(uint8_t*, uint16_t);
 
-/*******Funciones mayor abstraccion***************************/
+/*******Funciones mayor abstraccion*******/
 void moverXmm(int); // si es negativo mueve izq, positivo derecha
 void moverYmm(int);
 void bajarZ();

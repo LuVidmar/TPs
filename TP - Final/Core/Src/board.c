@@ -81,3 +81,23 @@ void board_move_to_y(point_t point){
     // Move
     moverYmm(dy);
 }
+
+void board_move_to_z(int direction){
+    // Inform user
+    usart_print("\n\rMoving: ");
+    char coordinates[16] = {0};
+    sprintf(coordinates, "z: %s", direction == Z_UP ? "UP" : "DOWN");
+    usart_print(coordinates);
+    lcd_clear();
+    lcd_change_text("MOVING");
+    lcd_write_in_second_line();
+    lcd_change_text(coordinates);
+
+    // Move
+    if (direction == Z_UP){
+        subirZ();
+    }
+    else{
+        bajarZ();
+    }
+}

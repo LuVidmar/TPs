@@ -1,12 +1,7 @@
-/*
- * STEPPER_MOTOR.c
- *
- *  Created on: Jun 11, 2023
- *      Author: Joaquin
- *
- *  El movimineto de los motores se activa en la rutina de TIM Callback
- */
 #include "STEPPER_MOTOR.h"
+/*
+El movimineto de los motores se activa en la rutina de TIM Callback
+*/
 
 bool motorBUSY = false;
 
@@ -24,22 +19,11 @@ uint32_t distFromCeroZ=0;
 
 bool rutinaOrigin=false;
 
-//void motorInit(){
-//
-//}
-
-//void moverMotor_cm(uint8_t motor, uint32_t cantCm){
-//
-//}
 
 void moverMotor_mm(uint16_t nroMotor, bool dir, uint32_t mms){
 	uint32_t steps = mms*STxMM;
 	moverMotor_step(nroMotor, dir, steps);
 }
-
-//void moverMotor_tiempo(uint8_t motor, uint32_t cantT){
-//
-//}
 
 //Multiplico steps x dos, ya que steps cuenta medio pulso
 void moverMotor_step(uint16_t nroMotor, bool dir, uint32_t steps)
@@ -69,7 +53,7 @@ void moverMotor_step(uint16_t nroMotor, bool dir, uint32_t steps)
 }
 
 
-/*******Funciones mayor abstraccion***************************/
+/*******Funciones mayor abstraccion********/
 void moverXmm(int dist){ // si es negativo mueve izq, positivo derecha
 	if (dist == 0)
 		return;
@@ -130,20 +114,6 @@ void stepperWatchDog(){
 	static bool zeroY= false;
 	static bool zeroZ= false;
 
-	//variable global de cant de mov, si se mueve mas de xxx desde el 0. Bloquear movimiento
-//	if((distFromCeroX + stepsM1)>MAXDIST_X){
-//		Motor1=STOP;
-//		//print error
-//	}
-//	if((distFromCeroY + stepsM2)>MAXDIST_Y){
-//		Motor2=STOP;
-//		//print error
-//	}
-//	if((distFromCeroZ + stepsM3)>MAXDIST_Z){
-//		Motor3=STOP;
-//		//print error
-//	}
-
 	zeroX= LeerEntrada(END_X);
 	zeroY= LeerEntrada(END_Y);
 	zeroZ= LeerEntrada(END_Z);
@@ -182,6 +152,3 @@ void stepperWatchDog(){
 
 	//iniciar un contador: si los motores estan prendidos masde 20 seg apagar todo
 }
-
-
-

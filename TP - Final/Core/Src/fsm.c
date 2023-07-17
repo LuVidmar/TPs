@@ -1,7 +1,7 @@
 #include "fsm.h"
 
 /* ------- Constants --------*/
-enum SUBSTATES { S_IDLE, MOVING_P1_X, MOVING_P1_Y, MOVING_P2_X, MOVING_P2_Y, END };
+enum SUBSTATES { S_IDLE, MOVING_P1_X, MOVING_P1_Y, MOVING_P1_Z_DOWN, MOVING_P1_Z_UP, MOVING_P2_X, MOVING_P2_Y, MOVING_P2_Z_DOWN, MOVING_P2_Z_UP, END };
 uint8_t state = STATE_INPUT;
 uint8_t old_state = STATE_INIT;
 uint8_t substate = S_IDLE;
@@ -110,17 +110,28 @@ void state_output(void) {
             substate = next_state;
         }
         break;
-    case MOVING_P1_X:
+    case MOVING_P1_X: // Move to starting point
         board_move_to_x(starting_point);
         next_state = MOVING_P1_Y;
         substate = S_IDLE;
         break;
     case MOVING_P1_Y:
         board_move_to_y(starting_point);
+        next_state = MOVING_P1_Z_DOWN;
+        substate = S_IDLE;
+        break;
+    case MOVING_P1_Z_DOWN: // Move down
+        board_move_to_z(Z_DOWN);
+        electromagnet_toggle(); // Taking the piece
+        next_state = MOVING_P1_Z_UP;
+        substate = S_IDLE;
+        break;
+    case MOVING_P1_Z_UP:
+        board_move_to_z(Z_UP);
         next_state = MOVING_P2_X;
         substate = S_IDLE;
         break;
-    case MOVING_P2_X:
+    case MOVING_P2_X: // Move to ending point
         last_point = starting_point;
         board_move_to_x(ending_point);
         next_state = MOVING_P2_Y;
@@ -128,6 +139,17 @@ void state_output(void) {
         break;
     case MOVING_P2_Y:
         board_move_to_y(ending_point);
+        next_state = MOVING_P2_Z_DOWN;
+        substate = S_IDLE;
+        break;
+    case MOVING_P2_Z_DOWN:
+        board_move_to_z(Z_DOWN);
+        next_state = MOVING_P2_Z_UP;
+        substate = S_IDLE;
+        break;
+    case MOVING_P2_Z_UP:
+        board_move_to_z(Z_UP);
+        electromagnet_toggle(); // Placing the piece
         next_state = END;
         substate = S_IDLE;
         break;

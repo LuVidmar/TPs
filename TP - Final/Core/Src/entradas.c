@@ -1,27 +1,6 @@
-/*
- * Entradas.c
- *
- *  Created on: 24 jun. 2023
- *      Author: Joaquin
- */
 #include "entradas.h"
 
 uint32_t BufferEntradas = 0;
-
-
-//bool debounce(bool *SWITCHES){
-//    static uint16_t state = 0;
-//    //state = (state<<1) | !1 | 0xfe00;
-//    state = (state<<1) | HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_10) | 0xfe00;
-//    return (state == 0xff00);
-//}
-//
-//void entradasIntit(){
-//
-//}
-
-
-
 
 void DebounceEntradas (void)
 {
@@ -37,18 +16,6 @@ void DebounceEntradas (void)
 
 	if ( !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) )
 		in |= 0x04; //END_Z
-
-//	if ( HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) )
-//		in |= 0x08;
-//
-//	if ( HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) )
-//		in |= 0x10;
-//
-//	if ( HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) )
-//		in |= 0x20;
-//
-//	if ( HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) )
-//		in |= 0x40;
 
 	x = in ^ BufferEntradas;
 

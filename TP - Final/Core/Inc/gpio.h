@@ -1,23 +1,3 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file    gpio.h
-  * @brief   This file contains all the function prototypes for
-  *          the gpio.c file
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2023 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __GPIO_H__
 #define __GPIO_H__
 
@@ -30,8 +10,11 @@ extern "C" {
 
 #define ONBOARD_LED_Pin GPIO_PIN_13
 
+/* ------- Functions ------- */
 void MX_GPIO_Init(void);
-
+void electromagnet_on(void);
+void electromagnet_off(void);
+void electromagnet_toggle(void);
 
 #ifdef __cplusplus
 }

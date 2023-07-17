@@ -25,6 +25,7 @@
 /* Configure GPIO                                                             */
 /*----------------------------------------------------------------------------*/
 
+bool is_electromagnet_on = false;
 
 /** Configure pins as
         * Analog
@@ -86,4 +87,23 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+}
+
+void electromagnet_on(void){
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+  is_electromagnet_on = true;
+}
+
+void electromagnet_off(void){
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
+  is_electromagnet_on = false;
+}
+
+void electromagnet_toggle(void){
+  if (is_electromagnet_on){
+    electromagnet_off();
+  }
+  else{
+    electromagnet_on();
+  }
 }
