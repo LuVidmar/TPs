@@ -41,13 +41,16 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim3);
 
   /* Move to origin */
-  // volverOrigen();
+  lcd_change_text("Origin...");
+  usart_print("\n\rMoving to origin...\n\r");
+  volverOrigen();
 
   while (1)
   {
     DebounceEntradas();
     stepperWatchDog();
-    fsm();
+    if (!rutinaOrigin) // If not in origin rutine, run FSM
+      fsm();
   }
 
 }

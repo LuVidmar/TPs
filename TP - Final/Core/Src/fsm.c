@@ -43,7 +43,6 @@ void state_python(void) {
     // Detect new state
     if(old_state != state) {
         lcd_change_text("PYTHON");
-        usart_print("\n\rPython mode\n\r");
         //Write input in second line in lcd
         lcd_write_in_second_line();
         // Trigger input mechanism
@@ -53,7 +52,7 @@ void state_python(void) {
 
     // If waiting for python, let it know
     if(waiting_for_input) 
-        usart_print("STM-Ready.");
+        usart_print("STM-Ready\n");
     else {
         // Copy python input first 4 chars to data
         strncpy(data, data_python, 4);
@@ -93,6 +92,12 @@ void state_process(void) {
     }
     else{ // Data is invalid
         state = STATE_INPUT;
+        // Let python know input was invalid
+        if (PYTHON_INPUT){
+            reset_vars();
+            waiting_for_input = true;
+            usart_print("STM-Invalid\n");
+        }
         // Clear data
         memset(data, 0, sizeof(data));
     }
@@ -177,7 +182,7 @@ void reset_vars(void){
     // Let python know we are ready for input
     if (PYTHON_INPUT){
         waiting_for_input = true;
-        usart_print("STM-NextMove.");
+        usart_print("STM-NextMove\n");
     }
     
 }

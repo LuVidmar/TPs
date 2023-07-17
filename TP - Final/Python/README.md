@@ -6,3 +6,5 @@
 4. PC envia el movimiento al STM32 y espera confirmacion de que el movimiento fue realizado.
 5. STM32 avisa que el movimiento fue realizado.
 6. Volver al paso 2.
+
+>> Si falla la transmision de datos (es incorrecto el comando), STM32 envia 'STM-Error.' y se vuelve al paso 1.

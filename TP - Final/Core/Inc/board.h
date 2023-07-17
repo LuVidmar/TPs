@@ -8,8 +8,8 @@
 
 /* ------- Constants ------- */
 // Chess board
-#define BOARD_SIDES 8 // in squares
-#define SQUARE_SIZE 50 // in milimeters
+#define BOARD_SIDES 9 // in squares
+#define SQUARE_SIZE 25 // in milimeters
 
 /* ------- Variables ------- */
 typedef struct {

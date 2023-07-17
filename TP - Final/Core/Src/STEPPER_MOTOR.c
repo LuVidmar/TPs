@@ -88,11 +88,11 @@ void moverYmm(int dist){
 }
 void bajarZ(){
 	motorBUSY = true;
-	moverMotor_mm(EJEZ, ABAJO, 20);
+	moverMotor_mm(EJEZ, ABAJO, ALTURA);
 }
 void subirZ(){
 	motorBUSY = true;
-	moverMotor_mm(EJEZ, ARRIBA, 20);
+	moverMotor_mm(EJEZ, ARRIBA, ALTURA);
 }
 void volverOrigen(void){
 
@@ -110,45 +110,58 @@ void volverOrigen(void){
 
 void stepperWatchDog(){
 
-	static bool zeroX= false;
-	static bool zeroY= false;
-	static bool zeroZ= false;
+	static bool zeroX= false, zeroXdone = false;
+	static bool zeroY= false, zeroYdone = false;
+	static bool zeroZ= false, zeroZdone = false;
 
 	zeroX= LeerEntrada(END_X);
 	zeroY= LeerEntrada(END_Y);
 	zeroZ= LeerEntrada(END_Z);
 
 	if(rutinaOrigin){
-		if(zeroX){
+		if(zeroX && !zeroXdone){
 			Motor1=STOP;
 			moverMotor_mm(EJEY, ADELANTE, MAXDIST_Y);
 			motorBUSY=true;
+			zeroXdone=true;
 		}
-		if(zeroY){
+		if(zeroY && !zeroYdone){
 			Motor2=STOP;
 			moverMotor_mm(EJEZ, ARRIBA, MAXDIST_Z);
 			motorBUSY=true;
+			zeroYdone=true;
 		}
-		if(zeroZ){
+		if(zeroZ && !zeroZdone){
 			Motor3=STOP;
-			motorBUSY=false;
+			motorBUSY=true;
 			distFromCeroX=0;
 			distFromCeroY=0;
 			distFromCeroZ=0;
 			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, 0);
-			//mensaje de finalizacion de rutinaOrigen
+			zeroZdone=true;
+		}
+		if (zeroXdone && zeroYdone && zeroZdone){
+			rutinaOrigin=false;
+			zeroXdone=false;
+			zeroYdone=false;
+			zeroZdone=false;
+			motorBUSY=false;
+			lcd_change_text("Origin Done");
+  			usart_print("\n\rMoved to origin succesfully.\n\r");
 		}
 
 	}
 
+	/*
 	if(!rutinaOrigin){
 		if(zeroX)
 			Motor1=STOP;
 		if(zeroY)
-			Motor1=STOP;
+			Motor2=STOP;
 		if(zeroZ)
-			Motor1=STOP;
+			Motor3=STOP;
 	}
+	*/
 
 	//iniciar un contador: si los motores estan prendidos masde 20 seg apagar todo
 }

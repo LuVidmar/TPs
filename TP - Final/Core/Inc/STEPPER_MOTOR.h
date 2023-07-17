@@ -23,6 +23,7 @@
 #define EJEX 1
 #define EJEY 2
 #define EJEZ 3
+#define ALTURA 55
 
 #define MOTOR1_Port GPIOB
 #define MOTOR2_Port GPIOB
