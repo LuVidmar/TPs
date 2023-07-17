@@ -19,13 +19,32 @@ El objetivo de este trabajo es lograr la implementacion de un sistema de juego c
 El microprocesador utilizado durante toda la cursada, ideal para aplicaciones de control de este estilo.
 
 ### ***Motores, steppers, finales de carrera***
-- Pololu A4988
-- #todo insertar modelo de motores
-#todo insertar explicacion
+- x3 Pololu DRV8825
+- x3 Leadshine Stepping Motor, bipolar, 1.8◦/stepp, 1,5A
+- x3 Finales de carrera
+
+Para el movimiento de nuestro robot se decidio el uso de motores paso a paso, debido a su presicion, velocidad y confiabilidad. Los mismos se controlan mediante un driver que le proporciona la corriente para excitar las bobinas y posee 3 conexiones con la placa: STEP, DIR, ENABLE. La primera recibe los pulsos para activar las bobinas (donde cada pulso equivaldra a 1 step), el segundo sera para diferenciar el sentido de giro y el tercero sera para habilitar o deshabilitar el motor.
+Como se tienen ejes lineales y el motor tiene un movimiento radial, habra que convertir las vueltas del motor en movimiento lineal. Para ello se utilizo la siguiente formula de conversion: 
+
+El motor tiene 360 grados, y cada paso del motor (step) equivale a 1.8◦. Es decir que para una vuelta completa de motor se tienen que ejecutar 200 stepps. Ademas el movimiento se logra con un tornillo acme de 4 hilos, con un avance de 8mm por vuelta. Entonces queda:
+
+1 vuelta de tornillo    -> 8mm de avance
+
+1 vuelta de tornillo -> 200 pasos
+
+-> 200 pasos/8mm = 25 pasos/mm
+
+Teniendo en cuenta esto, se creo una funcion que recibe como parametro la direccion y cantidad de mm y esta le envia al motor hacia donde cuanto debera moverse.
+
+Lo ultimo que se hizo, es mediante los finales de carrera es setear las coordenadas 0,0,0 de la maquina, para tener nocion del espacio.
+Los finales de carrera al ser pushbutton fisicos, al presionar el boton, se puenden obtener falsos positivos, por ruido o por el transitorio de 0 a 1. Por eso se debio crear una rutina de lectura de entradas con debounce. Donde se espera que la lectura de igual 4 veces consecutivas para contarlo como un cambio en el estado del boton.
+
 
 ### ***Electroiman + XXXXX***
 #todo modulo limitador de corriente y explicacion, optoacoplador, etc 
 Para el electroiman, se analizaron distintas opciones pero se termino optando por hacer uno a traves de un bobinado simple y la utilizacion de un pequeno modulo para limitar la corriente y aislar el sistema de potencia respecto del circuito de control.
+
+#todo imagen
 
 ### ***LCD + I2C***
 - LCD1602A
