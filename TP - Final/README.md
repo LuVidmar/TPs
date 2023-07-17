@@ -105,8 +105,19 @@ Para comenzar con la implementacion primero se debe dividir el proceso en sus mo
 - Modulo UART -> Las interacciones con el usuario y con la aplicacion de Python se realizara a traves de este modulo.
 - Modulo Motores -> Como lo indica su nombre, controlara los motores, finales de carrera, electroiman, etc.
 
+## Desafios
+
+Como desafio principal, mas alla de hacer funcionar lo propuesto, nos propusimos a hacer un programa que sea 100% NO-BLOQUEANTE. Esto a la primera puede sonar muy bueno, logico y facil. A la hora de implementarlo surgen muchos problemas que en primera instancia estaban ocultos. Ya que en la solucion esta el problema. Como hacer que todo ande a la vez, que no sea bloqueante, pero que a su vez, no se pisen los distintos modulos. Ya que por ejemplo. Si un motor esta andando, no hay un delay(1000), esperando a que se termine de mover. 
+Esto tambien dificulta el debbugeo ya que muchas cosas corren con interrupciones o durante varios ciclos de clock.
+
+Pero con planeamiento previo y debugeo logramos resultdos muy positivos. 
+
+Lo que nos permite haber hecho esto, es que la escalabilidad del proyecto es mucho mas facil, ya que se podria embeber en un RTOS o agregas otras funcionalidades que funciones en "paralelo", sin perjudirar el correcto funcionameieneto de lo que ya tenemos.
+
+Otro desafio que tuvimos (un poco en sintonia con el anterior) fue poder diseccionar el proyecto y poder abarcarlo de a partes mas pequeñas sin perder de vista la funcionalidad macro. Al ser un proyecto ambisioso a la hora de querer abordar los pequeños modulos, se podia perder un poco la vision general. Con que me refiero a esto. A veces nos paso que en el afan de querer hacer andar una parte, por ejemplo el motor, al tenerlo andando por su cuenta, no siempre se acoplaba bien a la primera y habia que hacermodificaciones y darle una vuelta de rosca para que funcione todo en sintonia.
+
 ## Conclusion
-#todo
+
 
 ## Proximos pasos
 
