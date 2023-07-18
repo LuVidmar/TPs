@@ -3,7 +3,6 @@ import uart
 
 def main():
     while chess_board.game_ended() == False: # While the game is not over
-        print([move.uci for move in chess_board.board.move_stack])
         # Get move from user
         move = input("Enter your move: ")
         # Check if user wants to exit
