@@ -5,7 +5,7 @@ Este repositorio contiene todos los trabajos practicos realizdos para la curzada
 ## Trabajos Practicos
 
 Algunos de caracter obligatorio, otros como guias de practica. Estos son los trabajos practicos:
-1. [Compilacion Cruzada](U1%20-%20Compilacion%20Cruzada/README.md)
+1. [Compilacion Cruzada](U1%20-%20Compilacion%20Cruzada)
 2. [Linker Script](U1%20-%20Linker%20Script/README.md)
 3. [Startup Script](U1%20-%20Startup%20Script/README.md)
 4. [ADC](U2%20-%20ADC/README.md)
