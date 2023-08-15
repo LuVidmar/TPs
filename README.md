@@ -5,13 +5,13 @@ Este repositorio contiene todos los trabajos practicos realizdos para la curzada
 ## Trabajos Practicos
 
 Algunos de caracter obligatorio, otros como guias de practica. Estos son los trabajos practicos:
-1. ![Compilacion Cruzada]("/U1 - Compilacion Cruzada/README.md")
-2. Linker Script
-3. Startup Script
-4. ADC
-5. PWM & UART
-6. FSM & UART RX-TX
-7. TP Final - Ajedrez
+1. [Compilacion Cruzada](U1%20-%20Compilacion%20Cruzada/README.md)
+2. [Linker Script](U1%20-%20Linker%20Script/README.md)
+3. [Startup Script](U1%20-%20Startup%20Script/README.md)
+4. [ADC](U2%20-%20ADC/README.md)
+5. [PWM & UART](U3%20-%20PWM%20UART/README.md)
+6. [FSM & UART RX-TX](U4%20-%20FSM/README.md)
+7. [TP Final - Ajedrez](TP%20-%20Final/README.md)
 
 ## Trabajo Practico final
 
