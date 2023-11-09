@@ -249,16 +249,29 @@ void HAL_TIM_PWM_MspDeInit(TIM_HandleTypeDef* tim_pwmHandle)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
-  /* TIM1 */ 
+  /* TIM1 - Heartbeat */ 
   if (htim->Instance == TIM1){
     static uint32_t timeLED;
     timeLED++;
 
-    //LED blink
-    if (timeLED == 1000){ //check if 1 second has passed
-      HAL_GPIO_TogglePin(GPIOC, ONBOARD_LED_Pin); //toggle the LED
+    //LED first beat start
+    if (timeLED == 1000){ //turn on
+      HAL_GPIO_WritePin(GPIOC, ONBOARD_LED_Pin, GPIO_PIN_RESET);
+    }
+    //LED fist beat end
+    if (timeLED == 1100){ //turn off
+      HAL_GPIO_WritePin(GPIOC, ONBOARD_LED_Pin, GPIO_PIN_SET);
+    }
+    //LED first beat start
+    if (timeLED == 1400){ //turn on
+      HAL_GPIO_WritePin(GPIOC, ONBOARD_LED_Pin, GPIO_PIN_RESET);
+    }
+    //LED fist beat end
+    if (timeLED == 1500){ //turn off
+      HAL_GPIO_WritePin(GPIOC, ONBOARD_LED_Pin, GPIO_PIN_SET);
       timeLED = 0;
     }
+
   }
   /* TIM3 */ 
   else if(htim->Instance == TIM3){
