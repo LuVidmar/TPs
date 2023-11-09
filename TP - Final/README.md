@@ -77,13 +77,13 @@ Componente necesario para interacción con el usuario a través de la terminal p
 
 ### ***Pinout***
 
-|              |        **Tipo de Pin**       | **I/O** | **Cantidad** |            **Pin**           |
-|:------------:|:----------------------------:|:-------:|:------------:|:----------------------------:|
-| LCD          | I2C                          |    O    |       2      | PB6, PB7                     |
-| UART         | GPIO                         |   I/O   |       2      | PA9, PA10                    |
-| 3x Stepper   | 3x GPIO - Dir 3x GPIO - Step |   O O   |      3 3     | PA7, PB13, PB5 PB0, PB1, PB4 |
-| 3x End-stops | GPIO                         |    I    |       3      | PB10, PB11, PB12             |
-| Electroiman  | GPIO                         |    O    |       1      | PB14                         |
+|              |        **Tipo de Pin**       | **I/O** | **Cantidad**  |            **Pin**           |
+|:------------:|:----------------------------:|:-------:|:-------------:|:----------------------------:|
+| LCD          | I2C                          |    O    |       2       | PB6, PB7                     |
+| UART         | GPIO                         |   I/O   |       2       | PA9, PA10                    |
+| 3x Stepper   | 3x GPIO - Dir 3x GPIO - Step |   O O   |      3 3 3    | PA7, PB13, PB5 PB0, PB1, PB4, A0, A1, A2 |
+| 3x End-stops | GPIO                         |    I    |       3       | PB10, PB11, PB12             |
+| Electroiman  | GPIO                         |    O    |       1       | PB14                         |
 
 ### ***Circuito***
 Para comenzar lo montamos todo sobre una breadboard.
