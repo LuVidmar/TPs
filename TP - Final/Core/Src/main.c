@@ -109,6 +109,7 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+    usart_print("\n\rError_Handler...\n\r");
   }
   /* USER CODE END Error_Handler_Debug */
 }

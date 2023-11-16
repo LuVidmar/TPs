@@ -7,13 +7,7 @@
                 "${workspaceRoot}/Core/Inc",
                 "${workspaceRoot}/Drivers/STM32F1xx_HAL_Driver/Inc",
                 "${workspaceRoot}/Drivers/CMSIS/Include",
-                "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
-                "/usr/arm-none-eabi/include",
-                "/lib/gcc/arm-none-eabi/10.3.1/include",
-                "/lib/gcc/arm-none-eabi/10.3.1/include-fixed",
-                "/usr/arm-none-eabi/include/machine",
-                "/usr/arm-none-eabi/include/newlib-nano",
-                "/usr/arm-none-eabi/include/sys"
+                "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
@@ -28,10 +22,7 @@
                     "${workspaceRoot}/Core/Inc",
                     "${workspaceRoot}/Drivers/STM32F1xx_HAL_Driver/Inc",
                     "${workspaceRoot}/Drivers/CMSIS/Include",
-                    "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
-                    "/usr/arm-none-eabi/include",
-                    "/lib/gcc/arm-none-eabi/10.3.1/include",
-                    "/lib/gcc/arm-none-eabi/10.3.1/include-fixed"
+                    "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32F1xx/Include"
                 ],
                 "limitSymbolsToIncludedHeaders": true
             },

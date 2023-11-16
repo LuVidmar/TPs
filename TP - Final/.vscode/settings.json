@@ -1,6 +1,6 @@
 {
-    "cortex-debug.gdbPath": "/usr/bin/gdb",
     "cortex-debug.stutilPath": "/usr/bin/st-util",
+    "cortex-debug.armToolchainPath": "/usr/share/arm-gnu-toolchain/bin",
     "files.associations": {
         "dma.h": "c",
         "tim.h": "c",
