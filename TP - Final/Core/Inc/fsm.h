@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 /* ------- Constants --------*/
-#define PYTHON_INPUT false
+#define PYTHON_INPUT true
 
 /* ------- Variables --------*/
 //States
