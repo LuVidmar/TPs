@@ -15,8 +15,19 @@ def user_make_move() -> bool:
     # Check if move is valid
     try:
         if chess_board.is_valid_move(move):
+            # Check if a piece was captured
+            move_is_capture = chess_board.is_capture(move)
             # Make move
             move_coords = chess_board.move(move)
+            if move_is_capture: # Move piece out of board
+                print("Piece captured, moving out of board...")
+                move_coords_out = chess_board.move_out_of_board(move_coords)
+                uart.send_move(move_coords_out) # Send move to STM32
+                print("Move sent to STM32: " + move_coords_out)
+                print("Waiting for STM32...")
+                if uart.wait_ready_next(): # If move is valid (correctly received by STM32)
+                    # wait for STM32 to make move (3s)
+                    time.sleep(3)
             # Send move to STM32
             uart.send_move(move_coords)
             print("Move sent to STM32: " + move_coords)
@@ -28,6 +39,8 @@ def user_make_move() -> bool:
         # Wait for STM32 to make move
         print("Waiting for STM32...")
         if uart.wait_ready_next(): # If move is valid (correctly received by STM32)
+            # wait for STM32 to make move (3s)
+            time.sleep(3)
             return True
         else: # If move is invalid (not correctly received by STM32)
             # undo latest move
@@ -40,7 +53,19 @@ def user_make_move() -> bool:
 
 def make_computer_move():
     computer_move = chess_board.get_best_move()
+    # Check if a piece was captured
+    move_is_capture = chess_board.is_capture(computer_move)
+    # Make move
     move_coords = chess_board.move(computer_move)
+    if move_is_capture: # Move piece out of board
+        print("Piece captured, moving out of board...")
+        move_coords_out = chess_board.move_out_of_board(move_coords)
+        uart.send_move(move_coords_out) # Send move to STM32
+        print("Move sent to STM32: " + move_coords_out)
+        print("Waiting for STM32...")
+        if uart.wait_ready_next(): # If move is valid (correctly received by STM32)
+            # wait for STM32 to make move (3s)
+            time.sleep(3)
     # Send move to STM32
     uart.send_move(move_coords)
     print("Move sent to STM32: " + move_coords)

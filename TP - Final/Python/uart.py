@@ -26,7 +26,7 @@ def wait_ready_next() -> bool:
     while True:
         # Read data from STM32, non-blocking, every 0.1s
         c = ser.readline().decode('utf-8')
-        print(clean_str(c)) if len(c) > 3 else "" # Clear the string
+        # print(clean_str(c)) if len(c) > 3 else "" # Clear the string
 
         # Check if alive
         if "STM-NextMove" in c:
@@ -34,7 +34,7 @@ def wait_ready_next() -> bool:
             return True
         elif "STM-Ready" in c:
             ser.flush()
-            return True
+            continue
         elif "STM-Invalid" in c:
             ser.flush()
             return False

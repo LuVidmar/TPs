@@ -36,3 +36,10 @@ def get_best_move():
 
 def delete_engine():
     engine.quit()
+
+def is_capture(move: str) -> bool:
+    return board.is_capture(chess.Move.from_uci(move))
+
+def move_out_of_board(move: str) -> str:
+    # Move taken piece to A9
+    return move[2:4] + "a9"

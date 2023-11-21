@@ -112,12 +112,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   }
   else if(state == STATE_INPUT && PYTHON_INPUT){ //Check if we are supposed to interact with python
 
-    waiting_for_input = false; //We are not waiting for input anymore
     char c = UART1_rxBuffer[0];
   
     // Push data to data_python
     strcat(data_python, UART1_rxBuffer);
     if (c == '.'){ //Check if data is complete
+      waiting_for_input = false; //We are not waiting for input anymore
       return; //Don't receive next data
     }
     //Receive next data

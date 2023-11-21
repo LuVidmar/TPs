@@ -17,7 +17,7 @@ bool board_parse_movement(char* movement){
     if (movement[2] < 'A' || movement[2] > 'H') // Third character should be A-H
         return false;
     
-    if (movement[3] < '1' || movement[3] > '8') // Fourth character should be 1-8
+    if (movement[3] < '1' || movement[3] > '9') // Fourth character should be 1-8
         return false;
     
     return true; // If all checks passed, return true
